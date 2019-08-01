@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IntentPhrases</key>
+	<array>
+		<dict>
+			<key>IntentName</key>
+			<string>INStartWorkoutIntent</string>
+			<key>IntentExamples</key>
+			<array>
+				<string>Lance une balade de 15 minutes</string>
+				<string>Je veux marcher 3km</string>
+				<string>Je veux faire une balade d&apos;une heure</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>
