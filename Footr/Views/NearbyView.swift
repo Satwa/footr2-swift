@@ -21,12 +21,14 @@ struct NearbyView: View {
 				HStack{
 					Group{
 						Text(locationManager.cityName ?? "City")
+							.bold()
 						Spacer()
 						Text(locationManager.weather ?? "22°C")
+							.bold()
 					}
-					.font(.title)
+					.font(.headline)
 				}
-				.padding(.top)
+				.padding(.top, 25)
 				
 
 				MapComponent(coords: locationManager.lastKnownLocation?.coordinate, timeRadius: $expectedTime)
@@ -34,15 +36,15 @@ struct NearbyView: View {
 					.shadow(radius: 12)
 					.padding(.top)
 					.padding(.bottom)
+					.frame(minHeight: 300)
 				
 				HStack{
-					Text("Expected time of your walk")
+					Text("Expected time of your walk").bold()
 					Spacer()
 				}
 				
 				HStack{
 					Slider(value: $expectedTime, in: 15...120, step: 5) //
-						.accentColor(.white)
 					Text("\(Int(expectedTime)) minutes")
 				}
 
@@ -65,6 +67,7 @@ struct NearbyView: View {
 			.background(LinearGradient(gradient: Gradient(colors: [Color.orange, Color.pink]), startPoint: .topLeading, endPoint: .bottomTrailing))
 			.edgesIgnoringSafeArea(.all)
 			.foregroundColor(.white)
+			.accentColor(.white)
 		}
     }
 }

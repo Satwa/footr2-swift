@@ -6,12 +6,11 @@
 //  Copyright © 2019 Joshua Tabakhoff. All rights reserved.
 //
 
-import CoreLocation
-//import MapKit
-import Combine
 import SwiftUI
+import Combine
 import Alamofire
 import SwiftyJSON
+import CoreLocation
 
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     private let locManager: CLLocationManager
@@ -65,7 +64,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             CLGeocoder().reverseGeocodeLocation(locations.last!) { placemarks, error in
                 if let firstPlacemark = placemarks?.first {
                     if self.cityName != firstPlacemark.locality!{
-                        self.cityName = String(firstPlacemark.locality!) // + ", " + firstPlacemark.country!)
+                        self.cityName = String(firstPlacemark.locality!)
                     }
                 }
             }

@@ -20,18 +20,21 @@ struct MapComponent: UIViewRepresentable {
 	
     func makeUIView(context: Context) -> MKMapView {
         let view = MKMapView(frame: .zero)
-		view.delegate = mapDelegate
         view.tintColor = .orange
 		
         return view
     }
     
     func updateUIView(_ view: MKMapView, context: Context) {
-		let radius: Double = Double(Int(((5/3.6) * (timeRadius * 60)) / 2))
+		let radius: Double = Double(((5/3.6) * (timeRadius * 60)) / 2)
+		
         view.showsUserLocation = true
+		view.showsCompass = false
+		view.delegate = mapDelegate
 		
 		view.removeOverlays(view.overlays)
 		view.addOverlay(MKCircle(center: coords ?? CLLocationCoordinate2D(latitude: 0, longitude: 0), radius: radius as CLLocationDistance))
+		
 		
         let coordinate = CLLocationCoordinate2D(
             latitude: coords?.latitude ?? 0, longitude: coords?.longitude ?? 0)
@@ -53,12 +56,22 @@ class MapComponentDelegate: NSObject, MKMapViewDelegate {
 			
 			return circleRenderer
 		}
+		
 		return MKOverlayRenderer(overlay: overlay)
 	}
 	
-	func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-		if let _ = view.annotation!.title {
-			view.canShowCallout = false
+
+	func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
+		for view in views {
+			if view.annotation is MKUserLocation {
+				view.canShowCallout = false
+			}
 		}
 	}
+	
+//	func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+//		if let _ = view.annotation!.title {
+//			view.canShowCallout = false
+//		}
+//	}
 }
