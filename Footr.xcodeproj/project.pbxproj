@@ -25,8 +25,8 @@
 		7299BAD422F061940063E113 /* FootrUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7299BAD322F061940063E113 /* FootrUITests.swift */; };
 		7299BAE322F061E00063E113 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 7299BAE222F061E00063E113 /* Alamofire */; };
 		7299BAE622F062050063E113 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 7299BAE522F062050063E113 /* SwiftyJSON */; };
-		72BE936E22F0B85500EC3B68 /* StartNavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BE936D22F0B85500EC3B68 /* StartNavigationButton.swift */; };
-		72BE937022F0C11100EC3B68 /* MapComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BE936F22F0C11100EC3B68 /* MapComponent.swift */; };
+		72CD11412301B139002477A3 /* StartNavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BE936D22F0B85500EC3B68 /* StartNavigationButton.swift */; };
+		72CD11422301B139002477A3 /* MapComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BE936F22F0C11100EC3B68 /* MapComponent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -165,6 +165,8 @@
 			isa = PBXGroup;
 			children = (
 				7299BABF22F061940063E113 /* Info.plist */,
+				7299BAB722F061940063E113 /* Assets.xcassets */,
+				7284BED422F0B2F700A49D4F /* AppIntentVocabulary.plist */,
 				7282F3FF22F0664E00D8FCBA /* Footr.entitlements */,
 				7299BAB122F061920063E113 /* AppDelegate.swift */,
 				7299BAB322F061920063E113 /* SceneDelegate.swift */,
@@ -220,9 +222,7 @@
 				7282F40622F0676D00D8FCBA /* Supporting Files */,
 				7284BEB122F0687600A49D4F /* Managers */,
 				7282F40522F0676100D8FCBA /* Views */,
-				7299BAB722F061940063E113 /* Assets.xcassets */,
 				7299BABC22F061940063E113 /* LaunchScreen.storyboard */,
-				7284BED422F0B2F700A49D4F /* AppIntentVocabulary.plist */,
 				7299BAB922F061940063E113 /* Preview Content */,
 			);
 			path = Footr;
@@ -445,12 +445,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				72CD11412301B139002477A3 /* StartNavigationButton.swift in Sources */,
+				72CD11422301B139002477A3 /* MapComponent.swift in Sources */,
 				7284BEB322F068A800A49D4F /* LocationManager.swift in Sources */,
 				7299BAB222F061920063E113 /* AppDelegate.swift in Sources */,
-				72BE937022F0C11100EC3B68 /* MapComponent.swift in Sources */,
 				7299BAB422F061920063E113 /* SceneDelegate.swift in Sources */,
 				7299BAB622F061920063E113 /* NearbyView.swift in Sources */,
-				72BE936E22F0B85500EC3B68 /* StartNavigationButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

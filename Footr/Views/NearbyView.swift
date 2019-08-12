@@ -18,6 +18,8 @@ struct NearbyView: View {
     var body: some View {
 		NavigationView{
 			VStack{
+				Spacer()
+				
 				HStack{
 					Group{
 						Text(locationManager.cityName ?? "City")
@@ -61,6 +63,8 @@ struct NearbyView: View {
 				NavigationLink(destination: Text("WIP")){
 					StartNavigationButton()
 				}
+				
+				Spacer()
 			}
 			.padding()
 			.padding(.bottom, 25)
