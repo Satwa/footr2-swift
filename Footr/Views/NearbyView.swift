@@ -38,7 +38,7 @@ struct NearbyView: View {
 					.shadow(radius: 12)
 					.padding(.top)
 					.padding(.bottom)
-					.frame(minHeight: 300)
+					.frame(minHeight: 300, maxHeight: .infinity)
 				
 				HStack{
 					Text("Expected time of your walk").bold()
