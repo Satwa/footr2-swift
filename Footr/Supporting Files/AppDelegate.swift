@@ -8,6 +8,9 @@
 
 import UIKit
 
+let API_ROOT = "http://localhost:3012/v2/"
+// let API_ROOT = "https://joshuatabakhoff:3012/v2/"
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

@@ -68,6 +68,8 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
                     }
                 }
             }
+			
+			// Fetch monuments and tags
         }
         
         lastKnownLocation = locations.last

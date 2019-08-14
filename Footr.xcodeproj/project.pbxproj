@@ -27,6 +27,9 @@
 		7299BAE622F062050063E113 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 7299BAE522F062050063E113 /* SwiftyJSON */; };
 		72CD11412301B139002477A3 /* StartNavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BE936D22F0B85500EC3B68 /* StartNavigationButton.swift */; };
 		72CD11422301B139002477A3 /* MapComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BE936F22F0C11100EC3B68 /* MapComponent.swift */; };
+		72CD114523045330002477A3 /* MonumentsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CD114423045330002477A3 /* MonumentsManager.swift */; };
+		72CD114723045822002477A3 /* TagsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CD114623045822002477A3 /* TagsManager.swift */; };
+		72CD11492304587A002477A3 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CD11482304587A002477A3 /* Models.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +106,9 @@
 		7299BAD522F061940063E113 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		72BE936D22F0B85500EC3B68 /* StartNavigationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StartNavigationButton.swift; path = "../../../../../../../../System/Volumes/Data/Users/joshtab/workspace/xcode.nosync/footr-swiftui/Footr/Views/Components/StartNavigationButton.swift"; sourceTree = "<group>"; };
 		72BE936F22F0C11100EC3B68 /* MapComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapComponent.swift; path = "../../../../../../../../System/Volumes/Data/Users/joshtab/workspace/xcode.nosync/footr-swiftui/Footr/Views/Components/MapComponent.swift"; sourceTree = "<group>"; };
+		72CD114423045330002477A3 /* MonumentsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonumentsManager.swift; sourceTree = "<group>"; };
+		72CD114623045822002477A3 /* TagsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsManager.swift; sourceTree = "<group>"; };
+		72CD11482304587A002477A3 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +176,7 @@
 				7282F3FF22F0664E00D8FCBA /* Footr.entitlements */,
 				7299BAB122F061920063E113 /* AppDelegate.swift */,
 				7299BAB322F061920063E113 /* SceneDelegate.swift */,
+				72CD11482304587A002477A3 /* Models.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -178,6 +185,8 @@
 			isa = PBXGroup;
 			children = (
 				7284BEB222F068A800A49D4F /* LocationManager.swift */,
+				72CD114423045330002477A3 /* MonumentsManager.swift */,
+				72CD114623045822002477A3 /* TagsManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -446,10 +455,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				72CD11412301B139002477A3 /* StartNavigationButton.swift in Sources */,
+				72CD114523045330002477A3 /* MonumentsManager.swift in Sources */,
 				72CD11422301B139002477A3 /* MapComponent.swift in Sources */,
 				7284BEB322F068A800A49D4F /* LocationManager.swift in Sources */,
 				7299BAB222F061920063E113 /* AppDelegate.swift in Sources */,
 				7299BAB422F061920063E113 /* SceneDelegate.swift in Sources */,
+				72CD11492304587A002477A3 /* Models.swift in Sources */,
+				72CD114723045822002477A3 /* TagsManager.swift in Sources */,
 				7299BAB622F061920063E113 /* NearbyView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
