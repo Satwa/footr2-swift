@@ -19,9 +19,16 @@ class MonumentsManager: NSObject, ObservableObject {
 //		download()
 		
 		// NSDate().timeIntervalSince1970
+		if Storage.fileExists("monuments.json", in: .caches) {
+			let cache = Storage.retrieve("monuments.json", from: .caches, as: CachedMonuments.self)
+			self.monuments = cache.monuments
+		} else {
+			print("Need to download monuments")
+			return download()
+		}
 	}
 	
-	fileprivate func download(){
+	fileprivate func download(){ // TODO: Put the correct latitude & longitude
 		// Download function and save to cache
 		Alamofire.request(
 			API_ROOT + "monuments",
@@ -31,7 +38,9 @@ class MonumentsManager: NSObject, ObservableObject {
 			do {
 				guard let data = response.result.value else { print("ERROR: no data in MM"); return }
 				self.monuments = try JSONDecoder().decode([Monuments].self, from: data)
+				
 				// save to cache
+				Storage.store(CachedMonuments(last_latitude: 48.87603, last_longitude: 2.35036, last_sync: NSDate().timeIntervalSince1970, monuments: self.monuments), to: .caches, as: "monuments.json")
 			} catch let err {
 				print("Error happened MM fetch: ", err)
 				// if not working, there is an error while performing the request

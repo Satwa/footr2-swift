@@ -16,7 +16,13 @@ class TagsManager: NSObject, ObservableObject {
 	
 	func load(){
 		// Load from cache
-		download()
+
+		if Storage.fileExists("tags.json", in: .caches) {
+			self.tags = Storage.retrieve("tags.json", from: .caches, as: [Tags].self)
+		} else {
+			print("Need to download tags")
+			return download()
+		}
 	}
 	
 	fileprivate func download(){
@@ -25,8 +31,9 @@ class TagsManager: NSObject, ObservableObject {
 			do {
 				guard let data = response.result.value else { print("ERROR: no data in TM"); return }
 				self.tags = try JSONDecoder().decode([Tags].self, from: data)
-				print(self.tags)
+				
 				// save to cache
+				Storage.store(self.tags, to: .caches, as: "tags.json")
 			} catch let err {
 				print("Error happened TM fetch: ", err)
 				// if not working, there is an error while performing the request

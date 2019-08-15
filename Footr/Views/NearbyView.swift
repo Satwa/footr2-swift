@@ -18,7 +18,7 @@ struct NearbyView: View {
     var body: some View {
 		NavigationView{
 			VStack{
-				Spacer()
+//				Spacer()
 				
 				HStack{
 					Group{
@@ -38,7 +38,7 @@ struct NearbyView: View {
 					.shadow(radius: 12)
 					.padding(.top)
 					.padding(.bottom)
-					.frame(minHeight: 300, maxHeight: .infinity)
+					.frame(minHeight: 0, maxHeight: .infinity) // used to be 300
 				
 				HStack{
 					Text("Expected time of your walk").bold()
@@ -64,7 +64,7 @@ struct NearbyView: View {
 					StartNavigationButton()
 				}
 				
-				Spacer()
+//				Spacer()
 			}
 			.padding()
 			.padding(.bottom, 25)
@@ -72,6 +72,9 @@ struct NearbyView: View {
 			.edgesIgnoringSafeArea(.all)
 			.foregroundColor(.white)
 			.accentColor(.white)
+		}
+		.onAppear(){
+//			MonumentsManager().load()
 		}
     }
 }
