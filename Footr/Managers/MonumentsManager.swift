@@ -14,33 +14,42 @@ import Alamofire
 class MonumentsManager: NSObject, ObservableObject {
 	@Published var monuments: [Monuments] = []
 	
-	func load(){
+	func load(latitude: Double, longitude: Double){
 		// Load from cache or download
 //		download()
 		
 		// NSDate().timeIntervalSince1970
 		if Storage.fileExists("monuments.json", in: .caches) {
 			let cache = Storage.retrieve("monuments.json", from: .caches, as: CachedMonuments.self)
+			print("LATITUDE: \(cache.last_latitude) | LONGITUDE: \(cache.last_longitude)")
+			print("LATITUDE: \(latitude) | LONGITUDE: \(longitude)")
+			if cache.last_latitude != latitude.rounded(toPlaces: 3) || cache.last_longitude != longitude.rounded(toPlaces: 3) {
+				print("need to download again")
+				download(latitude: latitude, longitude: longitude)
+				return
+			}
+			
 			self.monuments = cache.monuments
 		} else {
 			print("Need to download monuments")
-			return download()
+			download(latitude: latitude, longitude: longitude)
 		}
 	}
 	
-	fileprivate func download(){ // TODO: Put the correct latitude & longitude
+	fileprivate func download(latitude: Double, longitude: Double){
 		// Download function and save to cache
 		Alamofire.request(
 			API_ROOT + "monuments",
 			method: .post,
-			parameters: ["latitude": 48.87603, "longitude": 2.35036]
+			parameters: ["latitude": latitude, "longitude": longitude]
 		).responseData { response in
 			do {
 				guard let data = response.result.value else { print("ERROR: no data in MM"); return }
 				self.monuments = try JSONDecoder().decode([Monuments].self, from: data)
 				
 				// save to cache
-				Storage.store(CachedMonuments(last_latitude: 48.87603, last_longitude: 2.35036, last_sync: NSDate().timeIntervalSince1970, monuments: self.monuments), to: .caches, as: "monuments.json")
+//				Storage.remove("monuments.json", from: .caches)
+				Storage.store(CachedMonuments(last_latitude: latitude.rounded(toPlaces: 3), last_longitude: longitude.rounded(toPlaces: 3), last_sync: NSDate().timeIntervalSince1970, monuments: self.monuments), to: .caches, as: "monuments.json")
 			} catch let err {
 				print("Error happened MM fetch: ", err)
 				// if not working, there is an error while performing the request

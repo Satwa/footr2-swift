@@ -31,6 +31,9 @@
 		72CD114723045822002477A3 /* TagsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CD114623045822002477A3 /* TagsManager.swift */; };
 		72CD11492304587A002477A3 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CD11482304587A002477A3 /* Models.swift */; };
 		72CD114B230563D4002477A3 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CD114A230563D4002477A3 /* Storage.swift */; };
+		72CD114F2305C86F002477A3 /* TagButtonComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CD114E2305C86F002477A3 /* TagButtonComponent.swift */; };
+		72CD11512305D340002477A3 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CD11502305D340002477A3 /* Double+Extensions.swift */; };
+		72CD11532305E9CB002477A3 /* MKPolygon+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CD11522305E9CB002477A3 /* MKPolygon+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +114,9 @@
 		72CD114623045822002477A3 /* TagsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsManager.swift; sourceTree = "<group>"; };
 		72CD11482304587A002477A3 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		72CD114A230563D4002477A3 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		72CD114E2305C86F002477A3 /* TagButtonComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButtonComponent.swift; sourceTree = "<group>"; };
+		72CD11502305D340002477A3 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
+		72CD11522305E9CB002477A3 /* MKPolygon+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKPolygon+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +186,8 @@
 				7299BAB322F061920063E113 /* SceneDelegate.swift */,
 				72CD11482304587A002477A3 /* Models.swift */,
 				72CD114A230563D4002477A3 /* Storage.swift */,
+				72CD11502305D340002477A3 /* Double+Extensions.swift */,
+				72CD11522305E9CB002477A3 /* MKPolygon+Extensions.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -270,6 +278,7 @@
 			isa = PBXGroup;
 			children = (
 				72BE936D22F0B85500EC3B68 /* StartNavigationButton.swift */,
+				72CD114E2305C86F002477A3 /* TagButtonComponent.swift */,
 				72BE936F22F0C11100EC3B68 /* MapComponent.swift */,
 			);
 			path = Components;
@@ -457,7 +466,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				72CD11532305E9CB002477A3 /* MKPolygon+Extensions.swift in Sources */,
 				72CD11412301B139002477A3 /* StartNavigationButton.swift in Sources */,
+				72CD11512305D340002477A3 /* Double+Extensions.swift in Sources */,
 				72CD114523045330002477A3 /* MonumentsManager.swift in Sources */,
 				72CD11422301B139002477A3 /* MapComponent.swift in Sources */,
 				7284BEB322F068A800A49D4F /* LocationManager.swift in Sources */,
@@ -466,6 +477,7 @@
 				72CD11492304587A002477A3 /* Models.swift in Sources */,
 				72CD114723045822002477A3 /* TagsManager.swift in Sources */,
 				7299BAB622F061920063E113 /* NearbyView.swift in Sources */,
+				72CD114F2305C86F002477A3 /* TagButtonComponent.swift in Sources */,
 				72CD114B230563D4002477A3 /* Storage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -546,6 +558,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 200;
 				DEVELOPMENT_TEAM = Q5Y8T5J8BJ;
 				INFOPLIST_FILE = FootrIntent/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -553,6 +566,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = cafe.walk.app.FootrIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -565,6 +579,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 200;
 				DEVELOPMENT_TEAM = Q5Y8T5J8BJ;
 				INFOPLIST_FILE = FootrIntent/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -572,6 +587,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = cafe.walk.app.FootrIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -712,7 +728,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = cafe.walk.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -736,7 +752,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = cafe.walk.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

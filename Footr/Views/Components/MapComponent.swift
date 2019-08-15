@@ -17,6 +17,8 @@ struct MapComponent: UIViewRepresentable {
     let mapDelegate = MapComponentDelegate()
 	
 	@Binding var timeRadius: Double
+	var monuments: [Monuments]
+	@Binding var tags: [Tags]
 	
     func makeUIView(context: Context) -> MKMapView {
         let view = MKMapView(frame: .zero)
@@ -32,8 +34,24 @@ struct MapComponent: UIViewRepresentable {
 		view.showsCompass = false
 		view.delegate = mapDelegate
 		
+		view.removeAnnotations(view.annotations)
 		view.removeOverlays(view.overlays)
 		view.addOverlay(MKCircle(center: coords ?? CLLocationCoordinate2D(latitude: 0, longitude: 0), radius: radius as CLLocationDistance))
+		
+		
+		let circleLocation = CLLocation(latitude: coords?.latitude ?? 0, longitude: coords?.longitude ?? 0)
+		
+		for monument in monuments {
+			let annotation = MKPointAnnotation()
+			annotation.title = monument.name
+			annotation.coordinate = CLLocationCoordinate2D(latitude: monument.latitude, longitude: monument.longitude)
+			
+			let annotationLocation = CLLocation(latitude: monument.latitude, longitude: monument.longitude)
+			
+			if circleLocation.distance(from: annotationLocation) <= radius {
+				view.addAnnotation(annotation)
+			}
+		}
 		
 		
         let coordinate = CLLocationCoordinate2D(
@@ -59,19 +77,13 @@ class MapComponentDelegate: NSObject, MKMapViewDelegate {
 		
 		return MKOverlayRenderer(overlay: overlay)
 	}
-	
 
 	func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
 		for view in views {
 			if view.annotation is MKUserLocation {
 				view.canShowCallout = false
 			}
+			
 		}
 	}
-	
-//	func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-//		if let _ = view.annotation!.title {
-//			view.canShowCallout = false
-//		}
-//	}
 }

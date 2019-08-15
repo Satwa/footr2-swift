@@ -11,15 +11,14 @@ import CoreLocation
 
 struct NearbyView: View {
     
-    @EnvironmentObject var locationManager: LocationManager
+    @ObservedObject var locationManager: LocationManager
 	@State var expectedTime: Double = 30
 	@State var selectedTags: Int = 15
+	@State var tags: [Tags] = []
         
     var body: some View {
 		NavigationView{
 			VStack{
-//				Spacer()
-				
 				HStack{
 					Group{
 						Text(locationManager.cityName ?? "City")
@@ -33,7 +32,7 @@ struct NearbyView: View {
 				.padding(.top, 25)
 				
 
-				MapComponent(coords: locationManager.lastKnownLocation?.coordinate, timeRadius: $expectedTime)
+				MapComponent(coords: locationManager.lastKnownLocation?.coordinate, timeRadius: $expectedTime, monuments: locationManager.monuments, tags: $tags)
 					.cornerRadius(10)
 					.shadow(radius: 12)
 					.padding(.top)
@@ -50,21 +49,28 @@ struct NearbyView: View {
 					Text("\(Int(expectedTime)) minutes")
 				}
 
-				HStack{
-					Button("Select tags"){
-						print("WIP")
-					}
-					Spacer()
-					Text("\(selectedTags) tags selected")
+				ScrollView (.horizontal, showsIndicators: false) {
+					 HStack {
+						ForEach(0..<tags.count){ i in
+							TagButtonComponent(tag: self.tags[i])
+								.onTapGesture {
+									self.$tags[i].value.selected = ((self.tags[i].selected ?? true) ? false : true)
+									// print(self.locationManager.monuments.filter { $0.filters.contains(self.tags.filter{ $1.selected != false }).filter_equivalence })
+									
+									print("tapped")
+									print(self.tags)
+								}
+						}
+					 }
 				}
-				.padding(.top, 5)
-				.padding(.bottom, 55)
+				.frame(height: 100)
+				.padding(.top, 10)
+				.padding(.bottom, 20)
 				
 				NavigationLink(destination: Text("WIP")){
 					StartNavigationButton()
 				}
 				
-//				Spacer()
 			}
 			.padding()
 			.padding(.bottom, 25)
@@ -74,7 +80,7 @@ struct NearbyView: View {
 			.accentColor(.white)
 		}
 		.onAppear(){
-//			MonumentsManager().load()
+			self.tags = self.locationManager.tags
 		}
     }
 }
@@ -82,7 +88,7 @@ struct NearbyView: View {
 #if DEBUG
 struct NearbyView_Previews: PreviewProvider {
     static var previews: some View {
-        NearbyView()
+		NearbyView(locationManager: LocationManager())
     }
 }
 #endif

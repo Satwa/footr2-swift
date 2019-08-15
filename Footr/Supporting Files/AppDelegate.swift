@@ -8,7 +8,7 @@
 
 import UIKit
 
-let API_ROOT = "http://localhost:3012/v2/"
+let API_ROOT = "http://192.168.1.13:3012/v2/"
 // let API_ROOT = "https://joshuatabakhoff:3012/v2/"
 
 @UIApplicationMain

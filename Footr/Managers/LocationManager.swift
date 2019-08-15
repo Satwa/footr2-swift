@@ -15,9 +15,14 @@ import CoreLocation
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     private let locManager: CLLocationManager
     
+	private let monumentsManager: MonumentsManager = MonumentsManager()
+	private let tagsManager: TagsManager = TagsManager()
+	
     @Published var lastKnownLocation: CLLocation? = nil
     @Published var cityName: String? = nil
     @Published var weather: String? = nil
+	@Published var tags: [Tags] = []
+	@Published var monuments: [Monuments] = []
     
     override init() {
         self.locManager = CLLocationManager()
@@ -70,6 +75,11 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             }
 			
 			// Fetch monuments and tags
+			tagsManager.load()
+			self.tags = tagsManager.tags
+			
+			monumentsManager.load(latitude: locations.last!.coordinate.latitude, longitude: locations.last!.coordinate.longitude)
+			self.monuments = monumentsManager.monuments
         }
         
         lastKnownLocation = locations.last

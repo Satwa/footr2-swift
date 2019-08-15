@@ -19,6 +19,7 @@ struct Monuments: Codable {
 	var name: String
 	var latitude: Double
 	var longitude: Double
+	var filters: [String]
 	// TODO: description, illustration, category
 }
 
