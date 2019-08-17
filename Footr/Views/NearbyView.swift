@@ -11,7 +11,7 @@ import CoreLocation
 
 struct NearbyView: View {
     
-    @ObservedObject var locationManager: LocationManager
+    @EnvironmentObject var locationManager: LocationManager
 	@State var expectedTime: Double = 30
 	@State var selectedTags: Int = 15
 	@State var tags: [Tags] = []
@@ -52,13 +52,10 @@ struct NearbyView: View {
 				ScrollView (.horizontal, showsIndicators: false) {
 					 HStack {
 						ForEach(0..<tags.count){ i in
-							TagButtonComponent(tag: self.tags[i])
+							TagButtonComponent(tag: self.$tags[i])
 								.onTapGesture {
 									self.$tags[i].value.selected = ((self.tags[i].selected ?? true) ? false : true)
 									// print(self.locationManager.monuments.filter { $0.filters.contains(self.tags.filter{ $1.selected != false }).filter_equivalence })
-									
-									print("tapped")
-									print(self.tags)
 								}
 						}
 					 }
@@ -88,7 +85,7 @@ struct NearbyView: View {
 #if DEBUG
 struct NearbyView_Previews: PreviewProvider {
     static var previews: some View {
-		NearbyView(locationManager: LocationManager())
+		NearbyView()
     }
 }
 #endif

@@ -16,7 +16,8 @@ class MonumentsManager: NSObject, ObservableObject {
 	
 	func load(latitude: Double, longitude: Double){
 		// Load from cache or download
-//		download()
+		
+//		Storage.remove("monuments.json", from: .caches)
 		
 		// NSDate().timeIntervalSince1970
 		if Storage.fileExists("monuments.json", in: .caches) {

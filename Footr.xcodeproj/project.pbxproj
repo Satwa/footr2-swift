@@ -33,7 +33,6 @@
 		72CD114B230563D4002477A3 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CD114A230563D4002477A3 /* Storage.swift */; };
 		72CD114F2305C86F002477A3 /* TagButtonComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CD114E2305C86F002477A3 /* TagButtonComponent.swift */; };
 		72CD11512305D340002477A3 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CD11502305D340002477A3 /* Double+Extensions.swift */; };
-		72CD11532305E9CB002477A3 /* MKPolygon+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CD11522305E9CB002477A3 /* MKPolygon+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,7 +115,6 @@
 		72CD114A230563D4002477A3 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		72CD114E2305C86F002477A3 /* TagButtonComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButtonComponent.swift; sourceTree = "<group>"; };
 		72CD11502305D340002477A3 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
-		72CD11522305E9CB002477A3 /* MKPolygon+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKPolygon+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,7 +185,6 @@
 				72CD11482304587A002477A3 /* Models.swift */,
 				72CD114A230563D4002477A3 /* Storage.swift */,
 				72CD11502305D340002477A3 /* Double+Extensions.swift */,
-				72CD11522305E9CB002477A3 /* MKPolygon+Extensions.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -466,7 +463,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				72CD11532305E9CB002477A3 /* MKPolygon+Extensions.swift in Sources */,
 				72CD11412301B139002477A3 /* StartNavigationButton.swift in Sources */,
 				72CD11512305D340002477A3 /* Double+Extensions.swift in Sources */,
 				72CD114523045330002477A3 /* MonumentsManager.swift in Sources */,

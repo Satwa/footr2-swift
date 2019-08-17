@@ -24,6 +24,7 @@ struct MapComponent: UIViewRepresentable {
         let view = MKMapView(frame: .zero)
         view.tintColor = .orange
 		
+		
         return view
     }
     
@@ -41,14 +42,19 @@ struct MapComponent: UIViewRepresentable {
 		
 		let circleLocation = CLLocation(latitude: coords?.latitude ?? 0, longitude: coords?.longitude ?? 0)
 		
+		let selectedTags = tags.filter{ $0.selected ?? true }.map{ $0.filter_equivalence }.flatMap{ $0 }
+		
 		for monument in monuments {
 			let annotation = MKPointAnnotation()
-			annotation.title = monument.name
+			annotation.title = monument.name.replacingOccurrences(of: "\\s?\\([\\w\\s]*\\)", with: "", options: .regularExpression) // wip: remove parentethis
 			annotation.coordinate = CLLocationCoordinate2D(latitude: monument.latitude, longitude: monument.longitude)
 			
 			let annotationLocation = CLLocation(latitude: monument.latitude, longitude: monument.longitude)
 			
-			if circleLocation.distance(from: annotationLocation) <= radius {
+			let includes = monument.filters.filter { selectedTags.contains($0) }
+			
+			
+			if circleLocation.distance(from: annotationLocation) <= radius && includes.count > 0 {
 				view.addAnnotation(annotation)
 			}
 		}

@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct TagButtonComponent: View {
-	@State var tag: Tags
+	@Binding var tag: Tags
 	
     var body: some View {
         ZStack{
@@ -24,15 +24,5 @@ struct TagButtonComponent: View {
 				.font(.headline)
 				.layoutPriority(1)
 		}
-		.onAppear(){
-			print(self.tag)
-		}
-//		.onTapGesture {
-//			if let _ = self.tag.selected {
-//				self.tag.selected?.toggle()
-//			} else{
-//				self.tag.selected = false
-//			}
-//		}
     }
 }
