@@ -27,45 +27,48 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     override init() {
         self.locManager = CLLocationManager()
         super.init()
-        self.startUpdating()
+		
+		self.locManager.delegate = self
+		self.locManager.activityType = .fitness
+		self.locManager.requestAlwaysAuthorization()
+		self.locManager.startUpdatingLocation()
     }
     
-    init(globally: Bool){
-        self.locManager = CLLocationManager()
-        super.init()
-        if globally {
-            self.startUpdatingGlobally()
-        }else {
-            self.startUpdating()
-        }
-    }
-    
-    func startUpdating() {
-        self.locManager.delegate = self
-        self.locManager.requestWhenInUseAuthorization()
-        self.locManager.startUpdatingLocation()
-    }
-    
-    func startUpdatingGlobally(){
-        self.locManager.delegate = self
-        self.locManager.requestAlwaysAuthorization()
-        self.locManager.startUpdatingLocation()
-    }
-    
+	func startUpdatingInBackground(){
+		locManager.allowsBackgroundLocationUpdates = true
+		locManager.pausesLocationUpdatesAutomatically = false
+		locManager.startMonitoringSignificantLocationChanges()
+	}
+	func stopUpdatingInBackground(){
+		locManager.allowsBackgroundLocationUpdates = false
+		locManager.pausesLocationUpdatesAutomatically = false
+		locManager.stopMonitoringSignificantLocationChanges()
+	}
+	
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if lastKnownLocation == nil && locations.last != nil {
-            // Download weather once
-//            let coordinates: CLLocationCoordinate2D = locations.last!.coordinate
-//            Alamofire.request("https://api.openweathermap.org/data/2.5/weather?lat=" + String(coordinates.latitude) + "&lon=" + String(coordinates.latitude) + "&units=metric&APPID=b41a0945abd378f7fe6b59932c05c184").responseJSON { response in
-//                if let json = response.result.value {
-//                    let data = JSON(json)
-//                    self.weather = data["main"]["temp"].stringValue + "°C" // TODO: Cache for 4hrs
-//                }
-//            }
-            self.weather = "32°C"
+            // Fetch weather once
+			let coordinates: CLLocationCoordinate2D = locations.last!.coordinate
+			
+			let invalidateTime = UserDefaults.standard.double(forKey: "footr_invalidate")
+			if invalidateTime != 0.0 && invalidateTime > Date.timeIntervalBetween1970AndReferenceDate {
+				print("load from cache")
+				self.weather = UserDefaults.standard.string(forKey: "footr_weather")
+			} else {
+				Alamofire.request("https://api.openweathermap.org/data/2.5/weather?lat=" + String(coordinates.latitude) + "&lon=" + String(coordinates.latitude) + "&units=metric&APPID=b41a0945abd378f7fe6b59932c05c184").responseJSON { response in
+					if let json = response.result.value {
+						let data = JSON(json)
+						self.weather = data["main"]["temp"].stringValue + "°C"
+						
+						// Cache for 4hrs
+						UserDefaults.standard.set(self.weather, forKey: "footr_weather")
+						UserDefaults.standard.set(Date.timeIntervalBetween1970AndReferenceDate + 4*60*60, forKey: "footr_invalidate")
+					}
+				}
+			}
             
             
-            // Fetch city name
+            // Fetch city name once
             CLGeocoder().reverseGeocodeLocation(locations.last!) { placemarks, error in
                 if let firstPlacemark = placemarks?.first {
                     if self.cityName != firstPlacemark.locality!{
@@ -83,6 +86,8 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
         
         lastKnownLocation = locations.last
+		
+		print("\(Date.timeIntervalSinceReferenceDate): location changed")
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {

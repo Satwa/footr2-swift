@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		72443E2E2309BDB400E2BEB9 /* Binding+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72443E2D2309BDB400E2BEB9 /* Binding+Extensions.swift */; };
+		72443E302309BE5500E2BEB9 /* WalkingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72443E2F2309BE5500E2BEB9 /* WalkingView.swift */; };
+		72443E322309C07C00E2BEB9 /* MapSummaryComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72443E312309C07C00E2BEB9 /* MapSummaryComponent.swift */; };
+		72443E342309C1E400E2BEB9 /* SummaryCardComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72443E332309C1E400E2BEB9 /* SummaryCardComponent.swift */; };
+		72443E362309C94800E2BEB9 /* NotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72443E352309C94800E2BEB9 /* NotificationsManager.swift */; };
 		7282F40222F0669D00D8FCBA /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7282F40122F0669D00D8FCBA /* HealthKit.framework */; };
 		7282F40422F066AB00D8FCBA /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7282F40322F066AB00D8FCBA /* MapKit.framework */; };
 		7284BEB322F068A800A49D4F /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7284BEB222F068A800A49D4F /* LocationManager.swift */; };
@@ -74,6 +79,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		72443E2D2309BDB400E2BEB9 /* Binding+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extensions.swift"; sourceTree = "<group>"; };
+		72443E2F2309BE5500E2BEB9 /* WalkingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkingView.swift; sourceTree = "<group>"; };
+		72443E312309C07C00E2BEB9 /* MapSummaryComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSummaryComponent.swift; sourceTree = "<group>"; };
+		72443E332309C1E400E2BEB9 /* SummaryCardComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryCardComponent.swift; sourceTree = "<group>"; };
+		72443E352309C94800E2BEB9 /* NotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsManager.swift; sourceTree = "<group>"; };
+		72443E37230AB8D800E2BEB9 /* Gpsiestrack-2.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "Gpsiestrack-2.gpx"; path = "../../../Downloads/Gpsiestrack-2.gpx"; sourceTree = "<group>"; };
+		72443E38230ABA3200E2BEB9 /* Walk in London.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "Walk in London.gpx"; path = "../../../Downloads/Walk in London.gpx"; sourceTree = "<group>"; };
 		7282F3FF22F0664E00D8FCBA /* Footr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Footr.entitlements; sourceTree = "<group>"; };
 		7282F40122F0669D00D8FCBA /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		7282F40322F066AB00D8FCBA /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -169,6 +181,7 @@
 			children = (
 				72BE936C22F0B83A00EC3B68 /* Components */,
 				7299BAB522F061920063E113 /* NearbyView.swift */,
+				72443E2F2309BE5500E2BEB9 /* WalkingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -185,6 +198,7 @@
 				72CD11482304587A002477A3 /* Models.swift */,
 				72CD114A230563D4002477A3 /* Storage.swift */,
 				72CD11502305D340002477A3 /* Double+Extensions.swift */,
+				72443E2D2309BDB400E2BEB9 /* Binding+Extensions.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -195,6 +209,7 @@
 				7284BEB222F068A800A49D4F /* LocationManager.swift */,
 				72CD114423045330002477A3 /* MonumentsManager.swift */,
 				72CD114623045822002477A3 /* TagsManager.swift */,
+				72443E352309C94800E2BEB9 /* NotificationsManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -212,6 +227,8 @@
 		7299BAA522F061920063E113 = {
 			isa = PBXGroup;
 			children = (
+				72443E38230ABA3200E2BEB9 /* Walk in London.gpx */,
+				72443E37230AB8D800E2BEB9 /* Gpsiestrack-2.gpx */,
 				7299BAB022F061920063E113 /* Footr */,
 				7299BAC722F061940063E113 /* FootrTests */,
 				7299BAD222F061940063E113 /* FootrUITests */,
@@ -277,6 +294,8 @@
 				72BE936D22F0B85500EC3B68 /* StartNavigationButton.swift */,
 				72CD114E2305C86F002477A3 /* TagButtonComponent.swift */,
 				72BE936F22F0C11100EC3B68 /* MapComponent.swift */,
+				72443E312309C07C00E2BEB9 /* MapSummaryComponent.swift */,
+				72443E332309C1E400E2BEB9 /* SummaryCardComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -463,15 +482,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				72443E342309C1E400E2BEB9 /* SummaryCardComponent.swift in Sources */,
 				72CD11412301B139002477A3 /* StartNavigationButton.swift in Sources */,
 				72CD11512305D340002477A3 /* Double+Extensions.swift in Sources */,
 				72CD114523045330002477A3 /* MonumentsManager.swift in Sources */,
 				72CD11422301B139002477A3 /* MapComponent.swift in Sources */,
 				7284BEB322F068A800A49D4F /* LocationManager.swift in Sources */,
 				7299BAB222F061920063E113 /* AppDelegate.swift in Sources */,
+				72443E302309BE5500E2BEB9 /* WalkingView.swift in Sources */,
 				7299BAB422F061920063E113 /* SceneDelegate.swift in Sources */,
 				72CD11492304587A002477A3 /* Models.swift in Sources */,
+				72443E2E2309BDB400E2BEB9 /* Binding+Extensions.swift in Sources */,
 				72CD114723045822002477A3 /* TagsManager.swift in Sources */,
+				72443E322309C07C00E2BEB9 /* MapSummaryComponent.swift in Sources */,
+				72443E362309C94800E2BEB9 /* NotificationsManager.swift in Sources */,
 				7299BAB622F061920063E113 /* NearbyView.swift in Sources */,
 				72CD114F2305C86F002477A3 /* TagButtonComponent.swift in Sources */,
 				72CD114B230563D4002477A3 /* Storage.swift in Sources */,

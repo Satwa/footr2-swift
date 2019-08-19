@@ -12,7 +12,7 @@ struct Tags: Codable {
 	var slug: String
 	var name: String
 	var filter_equivalence: [String]
-	var selected: Bool? = true // default (TODO: returns nil for now but should return true)
+	var selected: Bool? = true // default
 }
 
 struct Monuments: Codable {
@@ -20,10 +20,15 @@ struct Monuments: Codable {
 	var latitude: Double
 	var longitude: Double
 	var filters: [String]
-	// TODO: description, illustration, category
+	var description: String?
+	var illustration: String?
+	
+	var ignored: Bool? = false
+	var announced: Bool? = false
+	var followed: Bool? = true
 }
 
-struct CachedMonuments: Codable { // File cache conforms to this in theory
+struct CachedMonuments: Codable { // Cache file conforms to this in theory
 	var last_latitude: Double
 	var last_longitude: Double
 	var last_sync: Double

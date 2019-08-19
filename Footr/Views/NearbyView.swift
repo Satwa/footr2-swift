@@ -52,10 +52,9 @@ struct NearbyView: View {
 				ScrollView (.horizontal, showsIndicators: false) {
 					 HStack {
 						ForEach(0..<tags.count){ i in
-							TagButtonComponent(tag: self.$tags[i])
+							TagButtonComponent(tag: self.$tags.element(i))
 								.onTapGesture {
 									self.$tags[i].value.selected = ((self.tags[i].selected ?? true) ? false : true)
-									// print(self.locationManager.monuments.filter { $0.filters.contains(self.tags.filter{ $1.selected != false }).filter_equivalence })
 								}
 						}
 					 }
@@ -64,7 +63,7 @@ struct NearbyView: View {
 				.padding(.top, 10)
 				.padding(.bottom, 20)
 				
-				NavigationLink(destination: Text("WIP")){
+				NavigationLink(destination: WalkingView(selectedTags: self.tags.filter{ $0.selected ?? true }, expectedTime: $expectedTime)){
 					StartNavigationButton()
 				}
 				

@@ -1,8 +1,8 @@
 //
-//  MapComponent.swift
+//  MapSummaryComponent.swift
 //  Footr
 //
-//  Created by Joshua Tabakhoff on 30/07/2019.
+//  Created by Joshua Tabakhoff on 18/08/2019.
 //  Copyright © 2019 Joshua Tabakhoff. All rights reserved.
 //
 
@@ -12,9 +12,9 @@ import MapKit
 import Combine
 
 
-struct MapComponent: UIViewRepresentable {
+struct MapSummaryComponent: UIViewRepresentable {
     var coords: CLLocationCoordinate2D?
-    let mapDelegate = MapComponentDelegate()
+    let mapDelegate = MapSummaryComponentDelegate()
 	
 	@Binding var timeRadius: Double
 	var monuments: [Monuments]
@@ -22,23 +22,9 @@ struct MapComponent: UIViewRepresentable {
 	
     func makeUIView(context: Context) -> MKMapView {
         let view = MKMapView(frame: .zero)
-        view.tintColor = .orange
-		
-		
-        return view
-    }
-    
-    func updateUIView(_ view: MKMapView, context: Context) {
 		let radius: Double = Double(((5/3.6) * (timeRadius * 60)) / 2)
-		
-        view.showsUserLocation = true
-		view.showsCompass = false
+        view.tintColor = .orange
 		view.delegate = mapDelegate
-		
-		view.removeAnnotations(view.annotations)
-		view.removeOverlays(view.overlays)
-		view.addOverlay(MKCircle(center: coords ?? CLLocationCoordinate2D(latitude: 0, longitude: 0), radius: radius as CLLocationDistance))
-		
 		
 		let circleLocation = CLLocation(latitude: coords?.latitude ?? 0, longitude: coords?.longitude ?? 0)
 		
@@ -53,34 +39,30 @@ struct MapComponent: UIViewRepresentable {
 			
 			let includes = monument.filters.filter { selectedTags.contains($0) }
 			
-			
 			if circleLocation.distance(from: annotationLocation) <= radius && includes.count > 0 {
 				view.addAnnotation(annotation)
 			}
 		}
 		
-		
         let coordinate = CLLocationCoordinate2D(
-            latitude: coords?.latitude ?? 0, longitude: coords?.longitude ?? 0)
-		let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+			latitude: coords?.latitude ?? 0, longitude: coords?.longitude ?? 0)
+		let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         let region = MKCoordinateRegion(center: coordinate, span: span)
         
 		view.setRegion(region, animated: true)
+		
+        return view
+    }
+    
+    func updateUIView(_ view: MKMapView, context: Context) {
+        view.showsUserLocation = true
+		view.showsCompass = false
+		view.delegate = mapDelegate
     }
 }
 
-class MapComponentDelegate: NSObject, MKMapViewDelegate {
+class MapSummaryComponentDelegate: NSObject, MKMapViewDelegate {
 	func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-		if let overlay = overlay as? MKCircle {
-			let circleRenderer = MKCircleRenderer(overlay: overlay)
-			
-			circleRenderer.fillColor = UIColor.init(named: "footrPink")!.withAlphaComponent(0.3)
-			circleRenderer.strokeColor = UIColor.init(named: "footrOrange")!
-			circleRenderer.lineWidth = 2
-			
-			return circleRenderer
-		}
-		
 		return MKOverlayRenderer(overlay: overlay)
 	}
 
@@ -89,8 +71,16 @@ class MapComponentDelegate: NSObject, MKMapViewDelegate {
 			if view.annotation is MKUserLocation {
 				view.canShowCallout = false
 			}
-			
 		}
+	}
+	
+	func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+		let coordinate = CLLocationCoordinate2D(
+			latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+		let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+        let region = MKCoordinateRegion(center: coordinate, span: span)
+        
+		mapView.setRegion(region, animated: true)
 	}
 	
 	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
