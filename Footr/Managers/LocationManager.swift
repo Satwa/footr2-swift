@@ -23,6 +23,11 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var weather: String? = nil
 	@Published var tags: [Tags] = []
 	@Published var monuments: [Monuments] = []
+	
+	let notificationsManager: NotificationsManager = NotificationsManager()
+	
+	var selectedTags: [Tags] = [] // when location in background
+	var startedLounging: Bool = false
     
     override init() {
         self.locManager = CLLocationManager()
@@ -46,6 +51,14 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 	}
 	
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+		fetchOnceWhenLocationFound(locations: locations)
+		lookForNotificationDelivery(locations: locations)
+		
+		lastKnownLocation = locations.last
+		print("\(Date.timeIntervalSinceReferenceDate): location changed")
+    }
+    
+	fileprivate func fetchOnceWhenLocationFound(locations: [CLLocation]){
         if lastKnownLocation == nil && locations.last != nil {
             // Fetch weather once
 			let coordinates: CLLocationCoordinate2D = locations.last!.coordinate
@@ -67,7 +80,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 				}
 			}
             
-            
             // Fetch city name once
             CLGeocoder().reverseGeocodeLocation(locations.last!) { placemarks, error in
                 if let firstPlacemark = placemarks?.first {
@@ -84,15 +96,37 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 			monumentsManager.load(latitude: locations.last!.coordinate.latitude, longitude: locations.last!.coordinate.longitude)
 			self.monuments = monumentsManager.monuments
         }
-        
-        lastKnownLocation = locations.last
+	}
+	
+	fileprivate func lookForNotificationDelivery(locations: [CLLocation]){
+		let coords = locations.last?.coordinate
 		
-		print("\(Date.timeIntervalSinceReferenceDate): location changed")
-    }
-    
+		if locations.last == nil {
+			return
+		}
+		
+		// Prepare notifications when updating location
+		if startedLounging {
+			let selectedTags = tags.filter{ $0.selected ?? true }.map{ $0.filter_equivalence }.flatMap{ $0 }
+			
+			for i in 0..<monuments.count {
+				let monument = monuments[i]
+				let monumentLocation = CLLocation(latitude: monument.latitude, longitude: monument.longitude)
+				
+				let includes = monument.filters.filter { selectedTags.contains($0) }
+				
+				let monumentsNear: Double = 300 // in meters
+				if locations.last!.distance(from: monumentLocation) <= monumentsNear && includes.count > 0 {
+					self.monuments[i].announced = true
+					notificationsManager.scheduleNotification(monument: monument)
+				}
+			}
+		}
+	}
+	
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse || status == .authorizedAlways {
-            manager.startUpdatingLocation()
+			manager.startUpdatingLocation()
         }
     }
 }

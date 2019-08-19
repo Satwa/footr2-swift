@@ -39,11 +39,15 @@ struct WalkingView: View {
 		.foregroundColor(.white)
 		.accentColor(.white)
 		.onAppear(){
-			NotificationManager().askForPermission()
+			self.locationManager.notificationsManager.askForPermission()
 			self.locationManager.startUpdatingInBackground()
+			self.locationManager.startedLounging = true
+			self.locationManager.selectedTags = self.selectedTags
 		}
 		.onDisappear(){
 			self.locationManager.stopUpdatingInBackground()
+			self.locationManager.startedLounging = false
+			self.locationManager.notificationsManager.cancelNotifications()
 		}
 	}
 }

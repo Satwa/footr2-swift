@@ -13,7 +13,7 @@ import UserNotifications
 
 let notificationCenter = UNUserNotificationCenter.current()
 
-class NotificationManager: ObservableObject{
+class NotificationsManager: ObservableObject{
     class NotificationCenterDelegate: NSObject, UNUserNotificationCenterDelegate{
         func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
             completionHandler([.alert, .sound])
@@ -46,15 +46,21 @@ class NotificationManager: ObservableObject{
         content.sound =  .default
         
         let identifier = "FootrPlaceNotification_\(UUID())"
-        
-//        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
-//
-//        notificationCenter.add(request, withCompletionHandler: { (error) in
-//            if let error = error {
-//                // Something went wrong
-//                print("error happened: \(error)")
-//            }
-//        })
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false)
+		let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+
+		if !(monument.announced ?? false) && !(monument.ignored ?? false) {
+			notificationCenter.add(request, withCompletionHandler: { (error) in
+				if let error = error {
+					// Something went wrong
+					print("error happened: \(error)")
+				}
+			})
+		}
     }
+	
+	func cancelNotifications(){
+		notificationCenter.removeAllPendingNotificationRequests() // when walk ended
+	}
     
 }

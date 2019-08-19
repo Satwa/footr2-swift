@@ -207,9 +207,9 @@
 			isa = PBXGroup;
 			children = (
 				7284BEB222F068A800A49D4F /* LocationManager.swift */,
+				72443E352309C94800E2BEB9 /* NotificationsManager.swift */,
 				72CD114423045330002477A3 /* MonumentsManager.swift */,
 				72CD114623045822002477A3 /* TagsManager.swift */,
-				72443E352309C94800E2BEB9 /* NotificationsManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
