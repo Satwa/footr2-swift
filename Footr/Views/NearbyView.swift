@@ -54,7 +54,8 @@ struct NearbyView: View {
 						ForEach(0..<tags.count){ i in
 							TagButtonComponent(tag: self.$tags.element(i))
 								.onTapGesture {
-									self.$tags[i].value.selected = ((self.tags[i].selected ?? true) ? false : true)
+//									print(self.$tags[i].selected)
+									self.tags[i].selected = ((self.tags[i].selected ?? true) ? false : true)
 								}
 						}
 					 }

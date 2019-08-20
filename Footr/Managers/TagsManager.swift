@@ -17,6 +17,8 @@ class TagsManager: NSObject, ObservableObject {
 	func load(){
 		// Load from cache
 
+//		Storage.remove("tags.json", from: .caches)
+		
 		if Storage.fileExists("tags.json", in: .caches) {
 			self.tags = Storage.retrieve("tags.json", from: .caches, as: [Tags].self)
 		} else {
