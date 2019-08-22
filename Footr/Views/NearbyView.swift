@@ -14,7 +14,7 @@ struct NearbyView: View {
     @EnvironmentObject var locationManager: LocationManager
 	@State var expectedTime: Double = 30
 	@State var selectedTags: Int = 15
-	@State var tags: [Tags] = []
+	@State var tags: [Tag] = []
         
     var body: some View {
 		NavigationView{
@@ -32,7 +32,7 @@ struct NearbyView: View {
 				.padding(.top, 25)
 				
 
-				MapComponent(coords: locationManager.lastKnownLocation?.coordinate, timeRadius: $expectedTime, monuments: locationManager.monuments, tags: $tags)
+				MapComponent(coords: locationManager.lastKnownLocation?.coordinate, timeRadius: $expectedTime, monuments: locationManager.monumentsManager.monuments, tags: $tags)
 					.cornerRadius(10)
 					.shadow(radius: 12)
 					.padding(.top)
@@ -73,11 +73,11 @@ struct NearbyView: View {
 			.padding(.bottom, 25)
 			.background(LinearGradient(gradient: Gradient(colors: [Color.orange, Color.pink]), startPoint: .topLeading, endPoint: .bottomTrailing))
 			.edgesIgnoringSafeArea(.all)
-			.foregroundColor(.white)
-			.accentColor(.white)
 		}
+		.foregroundColor(.white)
+		.accentColor(.white)
 		.onAppear(){
-			self.tags = self.locationManager.tags
+			self.tags = self.locationManager.tagsManager.tags
 		}
     }
 }

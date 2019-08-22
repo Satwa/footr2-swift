@@ -12,7 +12,7 @@ import Combine
 import Alamofire
 
 class TagsManager: NSObject, ObservableObject {
-	@Published var tags: [Tags] = []
+	@Published var tags: [Tag] = []
 	
 	func load(){
 		// Load from cache
@@ -20,7 +20,8 @@ class TagsManager: NSObject, ObservableObject {
 //		Storage.remove("tags.json", from: .caches)
 		
 		if Storage.fileExists("tags.json", in: .caches) {
-			self.tags = Storage.retrieve("tags.json", from: .caches, as: [Tags].self)
+			self.tags = Storage.retrieve("tags.json", from: .caches, as: [Tag].self)
+			self.objectWillChange.send() //while this is still buggy
 		} else {
 			print("Need to download tags")
 			return download()
@@ -32,8 +33,9 @@ class TagsManager: NSObject, ObservableObject {
 		Alamofire.request(API_ROOT + "tags").responseData { response in
 			do {
 				guard let data = response.result.value else { print("ERROR: no data in TM"); return }
-				self.tags = try JSONDecoder().decode([Tags].self, from: data)
+				self.tags = try JSONDecoder().decode([Tag].self, from: data)
 				
+				self.objectWillChange.send() //while this is still buggy
 				// save to cache
 				Storage.store(self.tags, to: .caches, as: "tags.json")
 			} catch let err {

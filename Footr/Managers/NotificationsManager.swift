@@ -35,21 +35,31 @@ class NotificationsManager: ObservableObject{
 	
 	func askForPermission(){
 		notificationCenter.requestAuthorization(options: [.alert, .sound]) { granted, error in
-			print(error as Any)
+//			print(error as Any)
 		}
 	}
     
-    func scheduleNotification(monument: Monuments){
+    func scheduleNotification(monument: Monument){
         let content = UNMutableNotificationContent()
-        content.title = "Places nearby"
-		content.body = monument.name
+        content.title = "Place nearby — \(monument.name)"
+		content.body = String(monument.description?.split(separator: ".")[0] ?? "\(monument.name)")
+		
+		if let data = monument.illustration_data {
+			guard let attachment = UNNotificationAttachment.saveImageToDisk(fileIdentifier: "image.jpg", data: data as NSData, options: nil) else {
+				print("error happened in UNNotificationAttachment.saveImageToDisk()")
+				return
+			}
+
+			content.attachments = [attachment]
+		}
         content.sound =  .default
         
         let identifier = "FootrPlaceNotification_\(UUID())"
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
 		let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
 
 		if !(monument.announced ?? false) && !(monument.ignored ?? false) {
+			print("happened: display notification")
 			notificationCenter.add(request, withCompletionHandler: { (error) in
 				if let error = error {
 					// Something went wrong

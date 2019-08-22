@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct TagButtonComponent: View {
-	@Binding var tag: Tags
+	@Binding var tag: Tag
 	
     var body: some View {
         ZStack{

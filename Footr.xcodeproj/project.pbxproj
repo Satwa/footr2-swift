@@ -38,6 +38,8 @@
 		72CD114B230563D4002477A3 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CD114A230563D4002477A3 /* Storage.swift */; };
 		72CD114F2305C86F002477A3 /* TagButtonComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CD114E2305C86F002477A3 /* TagButtonComponent.swift */; };
 		72CD11512305D340002477A3 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CD11502305D340002477A3 /* Double+Extensions.swift */; };
+		72E9A8AB230EB62B000DCB3D /* UNNotificationAttachment+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E9A8AA230EB62B000DCB3D /* UNNotificationAttachment+Extensions.swift */; };
+		72E9A8AE230ED13E000DCB3D /* HistoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E9A8AD230ED13E000DCB3D /* HistoryManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -127,6 +129,8 @@
 		72CD114A230563D4002477A3 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		72CD114E2305C86F002477A3 /* TagButtonComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButtonComponent.swift; sourceTree = "<group>"; };
 		72CD11502305D340002477A3 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
+		72E9A8AA230EB62B000DCB3D /* UNNotificationAttachment+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNNotificationAttachment+Extensions.swift"; sourceTree = "<group>"; };
+		72E9A8AD230ED13E000DCB3D /* HistoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,8 +201,7 @@
 				7299BAB322F061920063E113 /* SceneDelegate.swift */,
 				72CD11482304587A002477A3 /* Models.swift */,
 				72CD114A230563D4002477A3 /* Storage.swift */,
-				72CD11502305D340002477A3 /* Double+Extensions.swift */,
-				72443E2D2309BDB400E2BEB9 /* Binding+Extensions.swift */,
+				72E9A8AC230EB9C6000DCB3D /* Extensions */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 				72443E352309C94800E2BEB9 /* NotificationsManager.swift */,
 				72CD114423045330002477A3 /* MonumentsManager.swift */,
 				72CD114623045822002477A3 /* TagsManager.swift */,
+				72E9A8AD230ED13E000DCB3D /* HistoryManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -298,6 +302,16 @@
 				72443E332309C1E400E2BEB9 /* SummaryCardComponent.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		72E9A8AC230EB9C6000DCB3D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				72CD11502305D340002477A3 /* Double+Extensions.swift */,
+				72443E2D2309BDB400E2BEB9 /* Binding+Extensions.swift */,
+				72E9A8AA230EB62B000DCB3D /* UNNotificationAttachment+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -485,9 +499,11 @@
 				72443E342309C1E400E2BEB9 /* SummaryCardComponent.swift in Sources */,
 				72CD11412301B139002477A3 /* StartNavigationButton.swift in Sources */,
 				72CD11512305D340002477A3 /* Double+Extensions.swift in Sources */,
+				72E9A8AE230ED13E000DCB3D /* HistoryManager.swift in Sources */,
 				72CD114523045330002477A3 /* MonumentsManager.swift in Sources */,
 				72CD11422301B139002477A3 /* MapComponent.swift in Sources */,
 				7284BEB322F068A800A49D4F /* LocationManager.swift in Sources */,
+				72E9A8AB230EB62B000DCB3D /* UNNotificationAttachment+Extensions.swift in Sources */,
 				7299BAB222F061920063E113 /* AppDelegate.swift in Sources */,
 				72443E302309BE5500E2BEB9 /* WalkingView.swift in Sources */,
 				7299BAB422F061920063E113 /* SceneDelegate.swift in Sources */,

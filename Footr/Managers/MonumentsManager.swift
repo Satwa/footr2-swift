@@ -12,7 +12,7 @@ import Combine
 import Alamofire
 
 class MonumentsManager: NSObject, ObservableObject {
-	@Published var monuments: [Monuments] = []
+	@Published var monuments: [Monument] = []
 	
 	func load(latitude: Double, longitude: Double){
 		// Load from cache or download
@@ -22,8 +22,10 @@ class MonumentsManager: NSObject, ObservableObject {
 		// NSDate().timeIntervalSince1970
 		if Storage.fileExists("monuments.json", in: .caches) {
 			let cache = Storage.retrieve("monuments.json", from: .caches, as: CachedMonuments.self)
+			
 			print("LATITUDE: \(cache.last_latitude) | LONGITUDE: \(cache.last_longitude)")
 			print("LATITUDE: \(latitude) | LONGITUDE: \(longitude)")
+			
 			if cache.last_latitude != latitude.rounded(toPlaces: 3) || cache.last_longitude != longitude.rounded(toPlaces: 3) {
 				print("need to download again")
 				download(latitude: latitude, longitude: longitude)
@@ -31,6 +33,12 @@ class MonumentsManager: NSObject, ObservableObject {
 			}
 			
 			self.monuments = cache.monuments
+			
+			for i in 0..<self.monuments.count{
+				self.monuments[i].illustration = self.monuments[i].illustration
+			}
+			
+			self.objectWillChange.send() //while this is still buggy
 		} else {
 			print("Need to download monuments")
 			download(latitude: latitude, longitude: longitude)
@@ -46,10 +54,14 @@ class MonumentsManager: NSObject, ObservableObject {
 		).responseData { response in
 			do {
 				guard let data = response.result.value else { print("ERROR: no data in MM"); return }
-				self.monuments = try JSONDecoder().decode([Monuments].self, from: data)
+				self.monuments = try JSONDecoder().decode([Monument].self, from: data)
 				
+				for i in 0..<self.monuments.count{
+					self.monuments[i].illustration = self.monuments[i].illustration
+				}
+				
+				self.objectWillChange.send() //while this is still buggy
 				// save to cache
-//				Storage.remove("monuments.json", from: .caches)
 				Storage.store(CachedMonuments(last_latitude: latitude.rounded(toPlaces: 3), last_longitude: longitude.rounded(toPlaces: 3), last_sync: NSDate().timeIntervalSince1970, monuments: self.monuments), to: .caches, as: "monuments.json")
 			} catch let err {
 				print("Error happened MM fetch: ", err)
@@ -58,7 +70,7 @@ class MonumentsManager: NSObject, ObservableObject {
 		}
 	}
 	
-	func sort(accordingTo tags: [Tags]){
+	func sort(accordingTo tags: [Tag]){
 		// Return loaded monuments related to tags
 	}
 }

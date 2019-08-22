@@ -17,8 +17,8 @@ struct MapSummaryComponent: UIViewRepresentable {
     let mapDelegate = MapSummaryComponentDelegate()
 	
 	@Binding var timeRadius: Double
-	var monuments: [Monuments]
-	@Binding var tags: [Tags]
+	var monuments: [Monument]
+	@Binding var tags: [Tag]
 	
     func makeUIView(context: Context) -> MKMapView {
         let view = MKMapView(frame: .zero)
