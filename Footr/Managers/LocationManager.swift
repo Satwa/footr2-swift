@@ -37,6 +37,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 		self.locManager.activityType = .fitness
 		self.locManager.requestAlwaysAuthorization()
 		self.locManager.startUpdatingLocation()
+		self.locManager.startUpdatingHeading()
     }
     
 	func startUpdatingInBackground(){
@@ -46,6 +47,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 	}
 	func stopUpdatingInBackground(){
 		locManager.stopUpdatingLocation()
+		locManager.stopUpdatingHeading()
 		locManager.allowsBackgroundLocationUpdates = false
 		locManager.pausesLocationUpdatesAutomatically = false
 		locManager.stopMonitoringSignificantLocationChanges()

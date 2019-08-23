@@ -64,7 +64,7 @@ struct NearbyView: View {
 				.padding(.top, 10)
 				.padding(.bottom, 20)
 				
-				NavigationLink(destination: WalkingView(selectedTags: self.tags.filter{ $0.selected ?? true }, expectedTime: $expectedTime)){
+				NavigationLink(destination: SummaryView(selectedTags: self.tags.filter{ $0.selected ?? true }, expectedTime: $expectedTime)){
 					StartNavigationButton()
 				}
 				

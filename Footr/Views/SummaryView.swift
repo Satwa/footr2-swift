@@ -8,10 +8,12 @@
 
 import SwiftUI
 
-struct WalkingView: View {
+struct SummaryView: View {
 	@EnvironmentObject var locationManager: LocationManager
 	@State var selectedTags: [Tag]
 	@Binding var expectedTime: Double
+	
+	@State var selectedMonument: Monument? = nil
 	
     var body: some View {
         VStack{
@@ -21,13 +23,20 @@ struct WalkingView: View {
 				.padding(.top, 100)
 				.padding(.bottom)
 				.frame(minHeight: 0, maxHeight: .infinity)
+			
 
 			List(locationManager.monumentsManager.monuments.filter({ $0.announced ?? false })){ monument in
 				Text(monument.name)
 					.foregroundColor((monument.ignored ?? false) ? .gray : .black)
+					.onTapGesture {
+						 self.selectedMonument = self.locationManager.monumentsManager.monuments.first{ $0.name == monument.name }
+					}
 			}
 			.cornerRadius(10)
 			.shadow(radius: 12)
+			.sheet(item: $selectedMonument){ _ in
+				MonumentDetailsView(monument: self.$selectedMonument).environmentObject(self.locationManager)
+			}
 		}
 		.navigationViewStyle(StackNavigationViewStyle())
 		.navigationBarHidden(true)
@@ -51,11 +60,3 @@ struct WalkingView: View {
 		}
 	}
 }
-
-#if DEBUG
-struct WalkingView_Previews: PreviewProvider {
-    static var previews: some View {
-		WalkingView(selectedTags: [], expectedTime: .constant(120))
-    }
-}
-#endif

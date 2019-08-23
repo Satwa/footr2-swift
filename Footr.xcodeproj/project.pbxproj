@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		72443E2E2309BDB400E2BEB9 /* Binding+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72443E2D2309BDB400E2BEB9 /* Binding+Extensions.swift */; };
-		72443E302309BE5500E2BEB9 /* WalkingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72443E2F2309BE5500E2BEB9 /* WalkingView.swift */; };
+		72443E302309BE5500E2BEB9 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72443E2F2309BE5500E2BEB9 /* SummaryView.swift */; };
 		72443E322309C07C00E2BEB9 /* MapSummaryComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72443E312309C07C00E2BEB9 /* MapSummaryComponent.swift */; };
 		72443E342309C1E400E2BEB9 /* SummaryCardComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72443E332309C1E400E2BEB9 /* SummaryCardComponent.swift */; };
 		72443E362309C94800E2BEB9 /* NotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72443E352309C94800E2BEB9 /* NotificationsManager.swift */; };
@@ -40,6 +40,8 @@
 		72CD11512305D340002477A3 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CD11502305D340002477A3 /* Double+Extensions.swift */; };
 		72E9A8AB230EB62B000DCB3D /* UNNotificationAttachment+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E9A8AA230EB62B000DCB3D /* UNNotificationAttachment+Extensions.swift */; };
 		72E9A8AE230ED13E000DCB3D /* HistoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E9A8AD230ED13E000DCB3D /* HistoryManager.swift */; };
+		72E9A8B0230FF4DE000DCB3D /* MapDirectionsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E9A8AF230FF4DE000DCB3D /* MapDirectionsComponent.swift */; };
+		72E9A8B2230FF6A6000DCB3D /* MonumentDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E9A8B1230FF6A6000DCB3D /* MonumentDetailsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,7 +84,7 @@
 
 /* Begin PBXFileReference section */
 		72443E2D2309BDB400E2BEB9 /* Binding+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extensions.swift"; sourceTree = "<group>"; };
-		72443E2F2309BE5500E2BEB9 /* WalkingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkingView.swift; sourceTree = "<group>"; };
+		72443E2F2309BE5500E2BEB9 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		72443E312309C07C00E2BEB9 /* MapSummaryComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSummaryComponent.swift; sourceTree = "<group>"; };
 		72443E332309C1E400E2BEB9 /* SummaryCardComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryCardComponent.swift; sourceTree = "<group>"; };
 		72443E352309C94800E2BEB9 /* NotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsManager.swift; sourceTree = "<group>"; };
@@ -131,6 +133,8 @@
 		72CD11502305D340002477A3 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		72E9A8AA230EB62B000DCB3D /* UNNotificationAttachment+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNNotificationAttachment+Extensions.swift"; sourceTree = "<group>"; };
 		72E9A8AD230ED13E000DCB3D /* HistoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryManager.swift; sourceTree = "<group>"; };
+		72E9A8AF230FF4DE000DCB3D /* MapDirectionsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDirectionsComponent.swift; sourceTree = "<group>"; };
+		72E9A8B1230FF6A6000DCB3D /* MonumentDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonumentDetailsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,7 +189,8 @@
 			children = (
 				72BE936C22F0B83A00EC3B68 /* Components */,
 				7299BAB522F061920063E113 /* NearbyView.swift */,
-				72443E2F2309BE5500E2BEB9 /* WalkingView.swift */,
+				72443E2F2309BE5500E2BEB9 /* SummaryView.swift */,
+				72E9A8B1230FF6A6000DCB3D /* MonumentDetailsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -300,6 +305,7 @@
 				72BE936F22F0C11100EC3B68 /* MapComponent.swift */,
 				72443E312309C07C00E2BEB9 /* MapSummaryComponent.swift */,
 				72443E332309C1E400E2BEB9 /* SummaryCardComponent.swift */,
+				72E9A8AF230FF4DE000DCB3D /* MapDirectionsComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -500,12 +506,14 @@
 				72CD11412301B139002477A3 /* StartNavigationButton.swift in Sources */,
 				72CD11512305D340002477A3 /* Double+Extensions.swift in Sources */,
 				72E9A8AE230ED13E000DCB3D /* HistoryManager.swift in Sources */,
+				72E9A8B0230FF4DE000DCB3D /* MapDirectionsComponent.swift in Sources */,
 				72CD114523045330002477A3 /* MonumentsManager.swift in Sources */,
 				72CD11422301B139002477A3 /* MapComponent.swift in Sources */,
+				72E9A8B2230FF6A6000DCB3D /* MonumentDetailsView.swift in Sources */,
 				7284BEB322F068A800A49D4F /* LocationManager.swift in Sources */,
 				72E9A8AB230EB62B000DCB3D /* UNNotificationAttachment+Extensions.swift in Sources */,
 				7299BAB222F061920063E113 /* AppDelegate.swift in Sources */,
-				72443E302309BE5500E2BEB9 /* WalkingView.swift in Sources */,
+				72443E302309BE5500E2BEB9 /* SummaryView.swift in Sources */,
 				7299BAB422F061920063E113 /* SceneDelegate.swift in Sources */,
 				72CD11492304587A002477A3 /* Models.swift in Sources */,
 				72443E2E2309BDB400E2BEB9 /* Binding+Extensions.swift in Sources */,
