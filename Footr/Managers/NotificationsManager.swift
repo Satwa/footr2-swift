@@ -25,7 +25,7 @@ class NotificationsManager: ObservableObject{
 			
 			let directionsAction = UNNotificationAction(identifier: "DIRECTIONS_ACTION",
 				  title: "Show me how to get there",
-				  options: UNNotificationActionOptions(rawValue: 0))
+				  options: .foreground)
 			
 			let stopAction = UNNotificationAction(identifier: "STOP_ACTION",
 				title: "End the walk",
@@ -60,9 +60,9 @@ class NotificationsManager: ObservableObject{
 					
 					case "DIRECTIONS_ACTION":
 						locationManager.monumentsManager.markAsFollowed(name: monument)
-						print("followed \(monument)")
+						locationManager.monumentsManager.selectedMonument = locationManager.monumentsManager.monuments.first{ $0.name == monument }
 					break
-					
+
 					case "STOP_ACTION":
 						locationManager.stopUpdatingInBackground()
 						locationManager.startedLounging = false

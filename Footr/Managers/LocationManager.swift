@@ -17,8 +17,8 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 	
 	private let locManager: CLLocationManager
     
-	let monumentsManager: MonumentsManager = MonumentsManager()
-	let tagsManager: TagsManager = TagsManager()
+	@Published var monumentsManager: MonumentsManager = MonumentsManager()
+	@Published var tagsManager: TagsManager = TagsManager()
 	
     @Published var lastKnownLocation: CLLocation? = nil
     @Published var cityName: String? = nil

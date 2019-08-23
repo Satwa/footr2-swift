@@ -14,6 +14,7 @@ import Alamofire
 class MonumentsManager: NSObject, ObservableObject {
 	internal let objectWillChange = ObservableObjectPublisher()
 	@Published var monuments: [Monument] = []
+	@Published var selectedMonument: Monument? = nil
 	
 	func load(latitude: Double, longitude: Double){
 		// Load from cache or download

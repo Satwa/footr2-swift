@@ -207,6 +207,7 @@
 		7282F40522F0676100D8FCBA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7299BABC22F061940063E113 /* LaunchScreen.storyboard */,
 				72BE936C22F0B83A00EC3B68 /* Components */,
 				7299BAB522F061920063E113 /* NearbyView.swift */,
 				72443E2F2309BE5500E2BEB9 /* SummaryView.swift */,
@@ -285,7 +286,6 @@
 				7282F40622F0676D00D8FCBA /* Supporting Files */,
 				7284BEB122F0687600A49D4F /* Managers */,
 				7282F40522F0676100D8FCBA /* Views */,
-				7299BABC22F061940063E113 /* LaunchScreen.storyboard */,
 				7299BAB922F061940063E113 /* Preview Content */,
 			);
 			path = Footr;

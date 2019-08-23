@@ -12,8 +12,7 @@ struct SummaryView: View {
 	@EnvironmentObject var locationManager: LocationManager
 	@State var selectedTags: [Tag]
 	@Binding var expectedTime: Double
-	
-	@State var selectedMonument: Monument? = nil
+
 	@State var showAnyMonument: Bool = false
 	
     var body: some View {
@@ -30,14 +29,14 @@ struct SummaryView: View {
 				Text(monument.name)
 					.foregroundColor((monument.ignored ?? false) ? .gray : .black)
 					.onTapGesture {
-						 self.selectedMonument = self.locationManager.monumentsManager.monuments.first{ $0.name == monument.name }
+						self.locationManager.monumentsManager.selectedMonument = self.locationManager.monumentsManager.monuments.first{ $0.name == monument.name }
 						self.showAnyMonument = true
 					}
 			}
 			.cornerRadius(10)
 			.shadow(radius: 12)
 			.sheet(isPresented: $showAnyMonument){
-				MonumentDetailsView(monument: self.$selectedMonument).environmentObject(self.locationManager)
+				MonumentDetailsView(monument: self.$locationManager.monumentsManager.selectedMonument).environmentObject(self.locationManager)
 			}
 		}
 		.navigationViewStyle(StackNavigationViewStyle())
