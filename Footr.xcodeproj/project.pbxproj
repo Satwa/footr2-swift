@@ -42,6 +42,7 @@
 		72E9A8AE230ED13E000DCB3D /* HistoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E9A8AD230ED13E000DCB3D /* HistoryManager.swift */; };
 		72E9A8B0230FF4DE000DCB3D /* MapDirectionsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E9A8AF230FF4DE000DCB3D /* MapDirectionsComponent.swift */; };
 		72E9A8B2230FF6A6000DCB3D /* MonumentDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E9A8B1230FF6A6000DCB3D /* MonumentDetailsView.swift */; };
+		72E9A8B423101A0A000DCB3D /* EnvironmentValues+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E9A8B323101A0A000DCB3D /* EnvironmentValues+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +136,7 @@
 		72E9A8AD230ED13E000DCB3D /* HistoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryManager.swift; sourceTree = "<group>"; };
 		72E9A8AF230FF4DE000DCB3D /* MapDirectionsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDirectionsComponent.swift; sourceTree = "<group>"; };
 		72E9A8B1230FF6A6000DCB3D /* MonumentDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonumentDetailsView.swift; sourceTree = "<group>"; };
+		72E9A8B323101A0A000DCB3D /* EnvironmentValues+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -316,6 +318,7 @@
 				72CD11502305D340002477A3 /* Double+Extensions.swift */,
 				72443E2D2309BDB400E2BEB9 /* Binding+Extensions.swift */,
 				72E9A8AA230EB62B000DCB3D /* UNNotificationAttachment+Extensions.swift */,
+				72E9A8B323101A0A000DCB3D /* EnvironmentValues+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -503,6 +506,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				72443E342309C1E400E2BEB9 /* SummaryCardComponent.swift in Sources */,
+				72E9A8B423101A0A000DCB3D /* EnvironmentValues+Extensions.swift in Sources */,
 				72CD11412301B139002477A3 /* StartNavigationButton.swift in Sources */,
 				72CD11512305D340002477A3 /* Double+Extensions.swift in Sources */,
 				72E9A8AE230ED13E000DCB3D /* HistoryManager.swift in Sources */,

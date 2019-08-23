@@ -14,6 +14,7 @@ struct SummaryView: View {
 	@Binding var expectedTime: Double
 	
 	@State var selectedMonument: Monument? = nil
+	@State var showAnyMonument: Bool = false
 	
     var body: some View {
         VStack{
@@ -30,12 +31,13 @@ struct SummaryView: View {
 					.foregroundColor((monument.ignored ?? false) ? .gray : .black)
 					.onTapGesture {
 						 self.selectedMonument = self.locationManager.monumentsManager.monuments.first{ $0.name == monument.name }
+						self.showAnyMonument = true
 					}
 			}
 			.cornerRadius(10)
 			.shadow(radius: 12)
-			.sheet(item: $selectedMonument){ _ in
-				MonumentDetailsView(monument: self.$selectedMonument).environmentObject(self.locationManager)
+			.sheet(isPresented: $showAnyMonument){
+				MonumentDetailsView(monument: self.$selectedMonument, show: self.$showAnyMonument).environmentObject(self.locationManager)
 			}
 		}
 		.navigationViewStyle(StackNavigationViewStyle())

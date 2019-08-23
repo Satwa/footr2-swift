@@ -25,7 +25,7 @@ struct MapDirectionsComponent: UIViewRepresentable {
 		view.showsTraffic = false
 		
 		let annotation = MKPointAnnotation()
-		annotation.title = monument!.name.replacingOccurrences(of: "\\s?\\([\\w\\s]*\\)", with: "", options: .regularExpression) // wip: remove parentethis
+		annotation.title = monument!.name.replacingOccurrences(of: "\\s?\\([\\w\\s]*\\)", with: "", options: .regularExpression) // wip: remove parenthesis
 		annotation.coordinate = CLLocationCoordinate2D(latitude: monument!.latitude, longitude: monument!.longitude)
 		view.addAnnotation(annotation)
 		
@@ -49,9 +49,10 @@ struct MapDirectionsComponent: UIViewRepresentable {
 
         directions.calculate { response, error in
             guard let unwrappedResponse = response else { return }
-
+			
             for route in unwrappedResponse.routes {
-                view.addOverlay(route.polyline)
+				print(route.steps.map{ $0.instructions })
+				view.addOverlay(route.polyline)
                 view.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
             }
         }
