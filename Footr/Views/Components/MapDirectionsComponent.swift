@@ -24,11 +24,6 @@ struct MapDirectionsComponent: UIViewRepresentable {
 		view.delegate = mapDelegate
 		view.showsTraffic = false
 		
-		let annotation = MKPointAnnotation()
-		annotation.title = monument!.name.replacingOccurrences(of: "\\s?\\([\\w\\s]*\\)", with: "", options: .regularExpression) // wip: remove parenthesis
-		annotation.coordinate = CLLocationCoordinate2D(latitude: monument!.latitude, longitude: monument!.longitude)
-		view.addAnnotation(annotation)
-		
         let coordinate = CLLocationCoordinate2D(
 			latitude: coords?.latitude ?? 0, longitude: coords?.longitude ?? 0)
 		let span = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
@@ -38,29 +33,43 @@ struct MapDirectionsComponent: UIViewRepresentable {
 		
 		view.setUserTrackingMode(.followWithHeading, animated: true)
 		
-		// Generate polyline
-		let request = MKDirections.Request()
-        request.source = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: coords?.latitude ?? 0, longitude: coords?.longitude ?? 0), addressDictionary: nil))
-		request.destination = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: monument!.latitude, longitude: monument!.longitude), addressDictionary: nil))
-        request.requestsAlternateRoutes = true
-		request.transportType = .walking
-
-        let directions = MKDirections(request: request)
-
-        directions.calculate { response, error in
-            guard let unwrappedResponse = response else { return }
-			
-            for route in unwrappedResponse.routes {
-				print(route.steps.map{ $0.instructions })
-				view.addOverlay(route.polyline)
-                view.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
-            }
-        }
-		
         return view
     }
     
     func updateUIView(_ view: MKMapView, context: Context) {
+		
+		if let _ = view.annotations.filter({ $0.title == monument!.name }).first {
+			print("Still same POI")
+		}else{
+			view.removeAnnotations(view.annotations)
+			view.removeOverlays(view.overlays)
+			
+			// Display annotation
+			let annotation = MKPointAnnotation()
+			annotation.title = monument!.name.replacingOccurrences(of: "\\s?\\([\\w\\s]*\\)", with: "", options: .regularExpression) // wip: remove parenthesis
+			annotation.coordinate = CLLocationCoordinate2D(latitude: monument!.latitude, longitude: monument!.longitude)
+			view.addAnnotation(annotation)
+			
+			// Generate polyline
+			let request = MKDirections.Request()
+			request.source = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: coords?.latitude ?? 0, longitude: coords?.longitude ?? 0), addressDictionary: nil))
+			request.destination = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: monument!.latitude, longitude: monument!.longitude), addressDictionary: nil))
+			request.requestsAlternateRoutes = true
+			request.transportType = .walking
+
+			let directions = MKDirections(request: request)
+
+			directions.calculate { response, error in
+				guard let unwrappedResponse = response else { return }
+				
+				for route in unwrappedResponse.routes {
+					print(route.steps.map{ $0.instructions })
+					view.addOverlay(route.polyline)
+					view.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
+				}
+			}
+		}
+		
         view.showsUserLocation = true
 		view.showsCompass = false
 		view.delegate = mapDelegate

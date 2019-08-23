@@ -37,7 +37,7 @@ struct SummaryView: View {
 			.cornerRadius(10)
 			.shadow(radius: 12)
 			.sheet(isPresented: $showAnyMonument){
-				MonumentDetailsView(monument: self.$selectedMonument, show: self.$showAnyMonument).environmentObject(self.locationManager)
+				MonumentDetailsView(monument: self.$selectedMonument).environmentObject(self.locationManager)
 			}
 		}
 		.navigationViewStyle(StackNavigationViewStyle())

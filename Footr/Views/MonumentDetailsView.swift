@@ -12,7 +12,6 @@ struct MonumentDetailsView: View {
 	@EnvironmentObject var locationManager: LocationManager
 	
 	@Binding var monument: Monument?
-	@Binding var show: Bool
 	@Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 	
     var body: some View {
@@ -39,9 +38,8 @@ struct MonumentDetailsView: View {
 			.navigationBarTitle(Text("Learn more about \(monument!.name)"), displayMode: .inline)
             .navigationBarItems(trailing: Button("OK"){
 				self.presentationMode.wrappedValue.dismiss()
-				//wip
-				self.show = false
             })
 		}
+		.accentColor(.orange)
     }
 }
