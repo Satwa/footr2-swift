@@ -25,6 +25,7 @@ struct MapSummaryComponent: UIViewRepresentable {
 		let radius: Double = Double(((5/3.6) * (timeRadius * 60)) / 2)
         view.tintColor = .orange
 		view.delegate = mapDelegate
+		view.showsTraffic = false
 		
 		let circleLocation = CLLocation(latitude: coords?.latitude ?? 0, longitude: coords?.longitude ?? 0)
 		

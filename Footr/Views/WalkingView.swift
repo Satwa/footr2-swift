@@ -24,7 +24,7 @@ struct WalkingView: View {
 
 			List(locationManager.monumentsManager.monuments.filter({ $0.announced ?? false })){ monument in
 				Text(monument.name)
-					.foregroundColor(.black)
+					.foregroundColor((monument.ignored ?? false) ? .gray : .black)
 			}
 			.cornerRadius(10)
 			.shadow(radius: 12)
