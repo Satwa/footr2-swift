@@ -12,6 +12,7 @@ import Combine
 import Alamofire
 
 class MonumentsManager: NSObject, ObservableObject {
+	internal let objectWillChange = ObservableObjectPublisher()
 	@Published var monuments: [Monument] = []
 	
 	func load(latitude: Double, longitude: Double){
@@ -62,7 +63,7 @@ class MonumentsManager: NSObject, ObservableObject {
 				
 				self.objectWillChange.send() //while this is still buggy
 				// save to cache
-				Storage.store(CachedMonuments(last_latitude: latitude.rounded(toPlaces: 3), last_longitude: longitude.rounded(toPlaces: 3), last_sync: NSDate().timeIntervalSince1970, monuments: self.monuments), to: .caches, as: "monuments.json")
+				self.save(latitude: latitude, longitude: longitude)
 			} catch let err {
 				print("Error happened MM fetch: ", err)
 				// if not working, there is an error while performing the request
@@ -70,7 +71,48 @@ class MonumentsManager: NSObject, ObservableObject {
 		}
 	}
 	
+	fileprivate func save(latitude: Double, longitude: Double){
+		let _monuments = monuments
+		
+		for i in 0..<_monuments.count{
+			_monuments[i].announced = false
+			_monuments[i].followed = false
+			_monuments[i].ignored = false
+		}
+		
+		Storage.store(CachedMonuments(last_latitude: latitude.rounded(toPlaces: 3), last_longitude: longitude.rounded(toPlaces: 3), last_sync: NSDate().timeIntervalSince1970, monuments: _monuments), to: .caches, as: "monuments.json")
+	}
+	
 	func sort(accordingTo tags: [Tag]){
 		// Return loaded monuments related to tags
+	}
+	
+	func markAsAnnounced(idx: Int){
+		self.monuments[idx].announced = true
+		self.objectWillChange.send() //while this is still buggy
+	}
+	
+	
+	
+	func markAsFollowed(idx: Int){
+		self.monuments[idx].followed = true
+		self.objectWillChange.send() //while this is still buggy
+	}
+	
+	func markAsFollowed(name: String){
+		self.monuments.first{ $0.name == name }?.followed = true
+		self.objectWillChange.send() //while this is still buggy
+	}
+	
+	
+	
+	func markAsIgnored(idx: Int){
+		self.monuments[idx].ignored = true
+		self.objectWillChange.send() //while this is still buggy
+	}
+	
+	func markAsIgnored(name: String){
+		self.monuments.first{ $0.name == name }?.ignored = true
+		self.objectWillChange.send() //while this is still buggy
 	}
 }

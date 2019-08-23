@@ -10,5 +10,5 @@ import Foundation
 
 class HistoryManager: NSObject, ObservableObject {
 	
-	
+	// Save here in memory, when last saved position > 30m, let's save again
 }

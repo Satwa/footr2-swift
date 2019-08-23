@@ -12,6 +12,7 @@ import Combine
 import Alamofire
 
 class TagsManager: NSObject, ObservableObject {
+	internal let objectWillChange = ObservableObjectPublisher()
 	@Published var tags: [Tag] = []
 	
 	func load(){

@@ -14,6 +14,8 @@ let API_ROOT = "http://192.168.1.13:3012/v2/"
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+	var locationManager: LocationManager = LocationManager()
+	
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         return true

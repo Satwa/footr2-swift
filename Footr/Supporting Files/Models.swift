@@ -64,7 +64,7 @@ struct Walk: Codable{
 	var longitude: Double
 	var monuments: [Monument]
 	var positions: [Coordinate]
-	var stopped: Bool = false
+	var stopped: Bool = false // ended or cancelled
 }
 
 struct WalksHistory: Codable{

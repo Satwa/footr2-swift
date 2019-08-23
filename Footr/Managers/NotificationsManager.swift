@@ -15,10 +15,68 @@ let notificationCenter = UNUserNotificationCenter.current()
 
 class NotificationsManager: ObservableObject{
     class NotificationCenterDelegate: NSObject, UNUserNotificationCenterDelegate{
+		override init(){
+			super.init()
+			
+			// Declare notification category (and actions related)
+			let ignoreAction = UNNotificationAction(identifier: "IGNORE_ACTION",
+				  title: "Ignore",
+				  options: UNNotificationActionOptions(rawValue: 0))
+			
+			let directionsAction = UNNotificationAction(identifier: "DIRECTIONS_ACTION",
+				  title: "Show me how to get there",
+				  options: UNNotificationActionOptions(rawValue: 0))
+			
+			let stopAction = UNNotificationAction(identifier: "STOP_ACTION",
+				title: "End the walk",
+				options: UNNotificationActionOptions(rawValue: 0))
+			
+			let placeNearbyCategory =
+				  UNNotificationCategory(identifier: "PLACE_NEARBY_CAT",
+				  actions: [ignoreAction, directionsAction, stopAction],
+				  intentIdentifiers: [],
+				  hiddenPreviewsBodyPlaceholder: "",
+				  options: .customDismissAction)
+			
+			notificationCenter.setNotificationCategories([placeNearbyCategory]) // later: summaryCategory?
+		}
+		
         func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
             completionHandler([.alert, .sound])
         }
-    }
+		
+		func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+			let notification = response.notification.request.content
+			
+			if notification.categoryIdentifier == "PLACE_NEARBY_CAT" {
+				// This notification is related to placeNearbyCategory
+				let monument = notification.userInfo["monument_name"] as! String
+				let locationManager = (UIApplication.shared.delegate as! AppDelegate).locationManager
+				
+				switch response.actionIdentifier {
+					case "IGNORE_ACTION":
+						locationManager.monumentsManager.markAsIgnored(name: monument)
+					break
+					
+					case "DIRECTIONS_ACTION":
+						locationManager.monumentsManager.markAsFollowed(name: monument)
+						print("followed \(monument)")
+					break
+					
+					case "STOP_ACTION":
+						locationManager.stopUpdatingInBackground()
+						locationManager.startedLounging = false
+						locationManager.notificationsManager.cancelNotifications()
+					break
+					
+					default:
+					break
+				}
+			}
+			
+			completionHandler()
+		}
+	}
     
     let uncDelegate = NotificationCenterDelegate()
     
@@ -52,7 +110,9 @@ class NotificationsManager: ObservableObject{
 
 			content.attachments = [attachment]
 		}
+		content.categoryIdentifier = "PLACE_NEARBY_CAT"
         content.sound =  .default
+		content.userInfo = ["monument_name": monument.name] // will this work?
         
         let identifier = "FootrPlaceNotification_\(UUID())"
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)

@@ -28,20 +28,12 @@ struct WalkingView: View {
 			}
 			.cornerRadius(10)
 			.shadow(radius: 12)
-			
-//			HStack{
-//				SummaryCardComponent(title: "Time", counter: .constant("12"))
-//				SummaryCardComponent(title: "Steps", counter: .constant("850"))
-//			}
-//
-//			HStack{
-//				SummaryCardComponent(title: "Alert", counter: .constant("8"))
-//				SummaryCardComponent(title: "Done", counter: .constant("-1"))
-//			}
 		}
+		.navigationViewStyle(StackNavigationViewStyle())
+		.navigationBarHidden(true)
 		.padding()
 		.padding(.bottom, 25)
-		.background(LinearGradient(gradient: Gradient(colors: [Color.orange, Color.pink]), startPoint: .topLeading, endPoint: .bottomTrailing))
+		.background(LinearGradient(gradient: Gradient(colors: [.orange, .pink]), startPoint: .topLeading, endPoint: .bottomTrailing))
 		.edgesIgnoringSafeArea(.all)
 
 		.onAppear{
@@ -51,11 +43,19 @@ struct WalkingView: View {
 			self.locationManager.selectedTags = self.selectedTags
 		}
 		.onDisappear{
-			self.locationManager.stopUpdatingInBackground()
-			self.locationManager.startedLounging = false
-			self.locationManager.notificationsManager.cancelNotifications()
-			
+			// in fact, when going to background, this code may be called so for now just comment it (even if it's broken atm)
+//			self.locationManager.stopUpdatingInBackground()
+//			self.locationManager.startedLounging = false
+//			self.locationManager.notificationsManager.cancelNotifications()
 			print("onDisappear")
 		}
 	}
 }
+
+#if DEBUG
+struct WalkingView_Previews: PreviewProvider {
+    static var previews: some View {
+		WalkingView(selectedTags: [], expectedTime: .constant(120))
+    }
+}
+#endif

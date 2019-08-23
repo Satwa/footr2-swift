@@ -23,9 +23,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var lastKnownLocation: CLLocation? = nil
     @Published var cityName: String? = nil
     @Published var weather: String? = nil
-	// vvv switch these to bindings?
-//	@Published var tags: [Tag] = []
-//	@Published var monuments: [Monument] = []
 	
 	let notificationsManager: NotificationsManager = NotificationsManager()
 	
@@ -48,6 +45,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 		locManager.startMonitoringSignificantLocationChanges()
 	}
 	func stopUpdatingInBackground(){
+		locManager.stopUpdatingLocation()
 		locManager.allowsBackgroundLocationUpdates = false
 		locManager.pausesLocationUpdatesAutomatically = false
 		locManager.stopMonitoringSignificantLocationChanges()
@@ -96,10 +94,8 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 			
 			// Fetch monuments and tags
 			tagsManager.load()
-//			self.tags = tagsManager.tags
 			
 			monumentsManager.load(latitude: locations.last!.coordinate.latitude, longitude: locations.last!.coordinate.longitude)
-//			self.monuments = monumentsManager.monuments
 			self.objectWillChange.send() //while this is still buggy
         }
 	}
@@ -122,7 +118,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 				let monumentsNear: Double = 200 // in meters
 				if locations.last!.distance(from: monumentLocation) <= monumentsNear && includes.count > 0 {
 					notificationsManager.scheduleNotification(monument: monument)
-					self.monumentsManager.monuments[i].announced = true
+					self.monumentsManager.markAsAnnounced(idx: i)
 				}
 			}
 		}
