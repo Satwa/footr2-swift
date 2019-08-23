@@ -38,9 +38,7 @@ struct MapDirectionsComponent: UIViewRepresentable {
     
     func updateUIView(_ view: MKMapView, context: Context) {
 		
-		if let _ = view.annotations.filter({ $0.title == monument!.name }).first {
-			print("Still same POI")
-		}else{
+		if view.annotations.filter({ $0.title == monument!.name }).first == nil {
 			view.removeAnnotations(view.annotations)
 			view.removeOverlays(view.overlays)
 			
