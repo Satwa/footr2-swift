@@ -25,6 +25,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var weather: String? = nil
 	
 	let notificationsManager: NotificationsManager = NotificationsManager()
+	let historyManager: HistoryManager = HistoryManager()
 	
 	var selectedTags: [Tag] = [] // when location in background
 	var startedLounging: Bool = false
@@ -67,19 +68,20 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 			let coordinates: CLLocationCoordinate2D = locations.last!.coordinate
 			
 			let invalidateTime = UserDefaults.standard.double(forKey: "footr_invalidate")
-			if invalidateTime != 0.0 && invalidateTime > Date.timeIntervalBetween1970AndReferenceDate {
+			
+			if invalidateTime != 0.0 && invalidateTime > Date.timeIntervalSinceReferenceDate {
 				self.weather = UserDefaults.standard.string(forKey: "footr_weather")
 			} else {
-				Alamofire.request("https://api.openweathermap.org/data/2.5/weather?lat=" + String(coordinates.latitude) + "&lon=" + String(coordinates.latitude) + "&units=metric&APPID=b41a0945abd378f7fe6b59932c05c184").responseJSON { response in
+				Alamofire.request("https://api.openweathermap.org/data/2.5/weather?lat=" + String(coordinates.latitude) + "&lon=" + String(coordinates.longitude) + "&units=metric&APPID=b41a0945abd378f7fe6b59932c05c184").responseJSON { response in
 					if let json = response.result.value {
 						let data = JSON(json)
 						
-						self.weather = data["main"]["temp"].stringValue + "°C"
+						self.weather = String(Int(data["main"]["temp"].doubleValue)) + "°C"
 						self.objectWillChange.send() //while this is still buggy
 						
 						// Cache for 4hrs
 						UserDefaults.standard.set(self.weather, forKey: "footr_weather")
-						UserDefaults.standard.set(Date.timeIntervalBetween1970AndReferenceDate + 4*60*60, forKey: "footr_invalidate")
+						UserDefaults.standard.set(Date.timeIntervalSinceReferenceDate + 4*60*60, forKey: "footr_invalidate")
 					}
 				}
 			}
@@ -123,6 +125,15 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 					self.monumentsManager.markAsAnnounced(idx: i)
 				}
 			}
+			
+			// Save position every 100 meters
+			let lastpos = historyManager.getLastPosition()! // not crash-proof
+			let lastpos_coordinates = CLLocation(latitude: lastpos.latitude, longitude: lastpos.longitude)
+			
+			if locations.last!.distance(from: lastpos_coordinates) < 100 { // save every 100meters
+				historyManager.addPosition(location: locations.last!.coordinate)
+			}
+			
 		}
 	}
 	

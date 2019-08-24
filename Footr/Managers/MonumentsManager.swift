@@ -21,7 +21,6 @@ class MonumentsManager: NSObject, ObservableObject {
 		
 //		Storage.remove("monuments.json", from: .caches)
 		
-		// NSDate().timeIntervalSince1970
 		if Storage.fileExists("monuments.json", in: .caches) {
 			let cache = Storage.retrieve("monuments.json", from: .caches, as: CachedMonuments.self)
 			
@@ -93,7 +92,7 @@ class MonumentsManager: NSObject, ObservableObject {
 		self.objectWillChange.send() //while this is still buggy
 	}
 	
-	
+
 	
 	func markAsFollowed(idx: Int){
 		self.monuments[idx].followed = true
@@ -115,5 +114,10 @@ class MonumentsManager: NSObject, ObservableObject {
 	func markAsIgnored(name: String){
 		self.monuments.first{ $0.name == name }?.ignored = true
 		self.objectWillChange.send() //while this is still buggy
+	}
+	
+		
+	func getMonument(name: String) -> Monument? {
+		return self.monuments.first{ $0.name == name }
 	}
 }

@@ -25,11 +25,11 @@ class NotificationsManager: ObservableObject{
 			
 			let directionsAction = UNNotificationAction(identifier: "DIRECTIONS_ACTION",
 				  title: "Show me how to get there",
-				  options: .foreground)
+				  options: [.foreground, .authenticationRequired])
 			
 			let stopAction = UNNotificationAction(identifier: "STOP_ACTION",
 				title: "End the walk",
-				options: UNNotificationActionOptions(rawValue: 0))
+				options: .destructive)
 			
 			let placeNearbyCategory =
 				  UNNotificationCategory(identifier: "PLACE_NEARBY_CAT",
@@ -56,14 +56,20 @@ class NotificationsManager: ObservableObject{
 				switch response.actionIdentifier {
 					case "IGNORE_ACTION":
 						locationManager.monumentsManager.markAsIgnored(name: monument)
+						
+						locationManager.historyManager.manipulateMonument(monument: locationManager.monumentsManager.getMonument(name: monument)!) // this isn't crash-proof
 					break
 					
 					case "DIRECTIONS_ACTION":
 						locationManager.monumentsManager.markAsFollowed(name: monument)
+						
+						locationManager.historyManager.manipulateMonument(monument: locationManager.monumentsManager.getMonument(name: monument)!) // this isn't crash-proof
+						
 						locationManager.monumentsManager.selectedMonument = locationManager.monumentsManager.monuments.first{ $0.name == monument }
 					break
 
 					case "STOP_ACTION":
+						locationManager.historyManager.markLastAsStopped()
 						locationManager.stopUpdatingInBackground()
 						locationManager.startedLounging = false
 						locationManager.notificationsManager.cancelNotifications()
@@ -120,6 +126,10 @@ class NotificationsManager: ObservableObject{
 
 		if !(monument.announced ?? false) && !(monument.ignored ?? false) {
 			print("happened: display notification")
+			
+			let locationManager = (UIApplication.shared.delegate as! AppDelegate).locationManager
+			locationManager.historyManager.manipulateMonument(monument: monument) // this isn't crash-proof
+			
 			notificationCenter.add(request, withCompletionHandler: { (error) in
 				if let error = error {
 					// Something went wrong
