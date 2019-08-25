@@ -13,6 +13,7 @@ import Alamofire
 
 class MonumentsManager: NSObject, ObservableObject {
 	internal let objectWillChange = ObservableObjectPublisher()
+	
 	@Published var monuments: [Monument] = []
 	@Published var selectedMonument: Monument? = nil
 	

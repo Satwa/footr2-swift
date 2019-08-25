@@ -45,10 +45,14 @@ struct SummaryView: View {
 		.padding(.bottom, 25)
 		.background(LinearGradient(gradient: Gradient(colors: [.orange, .pink]), startPoint: .topLeading, endPoint: .bottomTrailing))
 		.edgesIgnoringSafeArea(.all)
-
 		.onAppear{
 			self.locationManager.notificationsManager.askForPermission()
 			self.locationManager.startUpdatingInBackground()
+			
+			if !self.locationManager.startedLounging { // add a new walk only if none is currently happening
+				self.locationManager.historyManager.addWalk(latitude: self.locationManager.lastKnownLocation!.coordinate.latitude, longitude: self.locationManager.lastKnownLocation!.coordinate.longitude)
+			}
+			
 			self.locationManager.startedLounging = true
 			self.locationManager.selectedTags = self.selectedTags
 		}

@@ -76,7 +76,7 @@ struct NearbyView: View {
 		}
 		.foregroundColor(.white)
 		.accentColor(.white)
-		.onAppear(){
+		.onAppear{
 			self.tags = self.locationManager.tagsManager.tags
 		}
     }

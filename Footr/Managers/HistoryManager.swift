@@ -12,7 +12,6 @@ import Combine
 import CoreLocation
 
 // TODO: Don't edit a walk marked as stopped
-// TODO: Save everywhere
 // TODO: Monitor visited too (<50m from place)
 // TODO: Calculate duration from startedAt to stoppedAt
 // TODO: Sauvegarder polyline?
@@ -20,7 +19,7 @@ import CoreLocation
 class HistoryManager: NSObject, ObservableObject {
 	internal let objectWillChange = ObservableObjectPublisher()
 	@Published var history: WalksHistory = WalksHistory(walks: [])
-	// Save here in memory, when last saved position > 30m, let's save again
+	
 	var lastStartedWalkInMemory: Double = 0
 	
 	override init(){
@@ -28,6 +27,7 @@ class HistoryManager: NSObject, ObservableObject {
 		
 		if Storage.fileExists("history.json", in: .documents) {
 			self.history = Storage.retrieve("history.json", from: .documents, as: WalksHistory.self)
+			popEmptyWalks()
 		} else {
 			print("History file missing")
 		}
@@ -48,16 +48,17 @@ class HistoryManager: NSObject, ObservableObject {
 				}
 				
 				history.walks[walk_index].monuments[monument_index] = monument
-				
 			} else {
 				// Monument need to monument
-				guard let index = history.walks.firstIndex(where: { $0.startedAt == self.lastStartedWalkInMemory }) else {
+				guard let walk_index = history.walks.firstIndex(where: { $0.startedAt == self.lastStartedWalkInMemory }) else {
 					print("walk not found")
 					return
 				}
 				
-				history.walks[index].monuments.append(monument)
+				history.walks[walk_index].monuments.append(monument)
 			}
+			
+			save()
 		}else{
 			print("error happened: no walk in memory")
 		}
@@ -72,6 +73,8 @@ class HistoryManager: NSObject, ObservableObject {
 			
 			history.walks[walk_index].stopped = true
 			history.walks[walk_index].stoppedAt = Date.timeIntervalSinceReferenceDate
+			
+			save()
 		}else{
 			print("error happened: no walk in memory")
 		}
@@ -80,6 +83,8 @@ class HistoryManager: NSObject, ObservableObject {
 	func addWalk(latitude: Double, longitude: Double){ // TODO: When adding walk, schedule notification back to home
 		self.lastStartedWalkInMemory = Date.timeIntervalSinceReferenceDate
 		history.walks.append(Walk(startedAt: self.lastStartedWalkInMemory, latitude: latitude, longitude: longitude, monuments: [], positions: [Coordinate(latitude: latitude, longitude: longitude)]))
+		
+		save()
 	}
 	
 	func getLastPosition() -> Coordinate? {
@@ -104,12 +109,21 @@ class HistoryManager: NSObject, ObservableObject {
 			}
 			
 			history.walks[walk_index].positions.append(Coordinate(latitude: location.latitude, longitude: location.longitude))
+			
+			save()
 		}else{
 			print("error happened: no walk in memory")
 		}
 	}
 	
+	fileprivate func popEmptyWalks(){
+		self.history.walks.removeAll(where: { $0.monuments.count == 0 })
+		save()
+	}
+	
 	fileprivate func save(){
 		Storage.store(self.history, to: .documents, as: "history.json")
+//		print(self.history)
+//		self.objectWillChange.send()
 	}
 }

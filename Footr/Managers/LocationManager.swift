@@ -130,7 +130,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 			let lastpos = historyManager.getLastPosition()! // not crash-proof
 			let lastpos_coordinates = CLLocation(latitude: lastpos.latitude, longitude: lastpos.longitude)
 			
-			if locations.last!.distance(from: lastpos_coordinates) < 100 { // save every 100meters
+			if locations.last!.distance(from: lastpos_coordinates) >= 100 { // save every 100meters
 				historyManager.addPosition(location: locations.last!.coordinate)
 			}
 			
