@@ -20,6 +20,8 @@ struct MapSummaryComponent: UIViewRepresentable {
 	var monuments: [Monument]
 	@Binding var tags: [Tag]
 	
+	var walk: Walk
+	
     func makeUIView(context: Context) -> MKMapView {
         let view = MKMapView(frame: .zero)
 		let radius: Double = Double(((5/3.6) * (timeRadius * 60)) / 2)
@@ -47,7 +49,7 @@ struct MapSummaryComponent: UIViewRepresentable {
 		
         let coordinate = CLLocationCoordinate2D(
 			latitude: coords?.latitude ?? 0, longitude: coords?.longitude ?? 0)
-		let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+		let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
         let region = MKCoordinateRegion(center: coordinate, span: span)
         
 		view.setRegion(region, animated: true)
@@ -59,12 +61,39 @@ struct MapSummaryComponent: UIViewRepresentable {
         view.showsUserLocation = true
 		view.showsCompass = false
 		view.delegate = mapDelegate
+		
+		createPolyline(mapView: view, coordinates: walk.positions)
     }
+	
+	func createPolyline(mapView: MKMapView, coordinates: [Coordinate]) {
+		var points: [CLLocationCoordinate2D] = []
+		
+		for coordinate in coordinates {
+			points.append(CLLocationCoordinate2DMake(coordinate.latitude, coordinate.longitude))
+		}
+		
+		print(points)
+		
+		if points.count > 1 {
+			mapView.removeOverlays(mapView.overlays)
+			
+			let geodesic = MKGeodesicPolyline(coordinates: points, count: points.count)
+			mapView.addOverlay(geodesic)
+			print(mapView.overlays)
+		}
+
+		let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+		let region1 = MKCoordinateRegion(center: self.coords!, span: span)
+		mapView.setRegion(region1, animated: true)
+	}
+
 }
 
 class MapSummaryComponentDelegate: NSObject, MKMapViewDelegate {
 	func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-		return MKOverlayRenderer(overlay: overlay)
+		let renderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)
+		renderer.strokeColor = .orange
+        return renderer
 	}
 
 	func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
@@ -76,12 +105,12 @@ class MapSummaryComponentDelegate: NSObject, MKMapViewDelegate {
 	}
 	
 	func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-		let coordinate = CLLocationCoordinate2D(
-			latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
-		let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
-        let region = MKCoordinateRegion(center: coordinate, span: span)
-        
-		mapView.setRegion(region, animated: true)
+//		let coordinate = CLLocationCoordinate2D(
+//			latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+//		let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+//        let region = MKCoordinateRegion(center: coordinate, span: span)
+//        
+//		mapView.setRegion(region, animated: true)
 	}
 	
 	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {

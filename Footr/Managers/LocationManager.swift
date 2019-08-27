@@ -25,7 +25,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var weather: String? = nil
 	
 	let notificationsManager: NotificationsManager = NotificationsManager()
-	let historyManager: HistoryManager = HistoryManager()
+	@Published var historyManager: HistoryManager = HistoryManager()
 	
 	var selectedTags: [Tag] = [] // when location in background
 	var startedLounging: Bool = false

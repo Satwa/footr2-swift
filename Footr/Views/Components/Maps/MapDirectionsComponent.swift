@@ -16,13 +16,15 @@ struct MapDirectionsComponent: UIViewRepresentable {
     var coords: CLLocationCoordinate2D?
     let mapDelegate = MapDirectionsComponentDelegate()
 
-	@Binding var monument: Monument?
+	@Binding var monument: Monument
 	
     func makeUIView(context: Context) -> MKMapView {
         let view = MKMapView(frame: .zero)
         view.tintColor = .orange
 		view.delegate = mapDelegate
 		view.showsTraffic = false
+		
+		view.setUserTrackingMode(.followWithHeading, animated: true)
 		
         let coordinate = CLLocationCoordinate2D(
 			latitude: coords?.latitude ?? 0, longitude: coords?.longitude ?? 0)
@@ -31,27 +33,25 @@ struct MapDirectionsComponent: UIViewRepresentable {
         
 		view.setRegion(region, animated: true)
 		
-		view.setUserTrackingMode(.followWithHeading, animated: true)
-		
         return view
     }
     
     func updateUIView(_ view: MKMapView, context: Context) {
 		
-		if view.annotations.filter({ $0.title == monument!.name }).first == nil {
+		if view.annotations.filter({ $0.title == monument.name }).first == nil {
 			view.removeAnnotations(view.annotations)
 			view.removeOverlays(view.overlays)
 			
 			// Display annotation
 			let annotation = MKPointAnnotation()
-			annotation.title = monument!.name.replacingOccurrences(of: "\\s?\\([\\w\\s]*\\)", with: "", options: .regularExpression) // wip: remove parenthesis
-			annotation.coordinate = CLLocationCoordinate2D(latitude: monument!.latitude, longitude: monument!.longitude)
+			annotation.title = monument.name.replacingOccurrences(of: "\\s?\\([\\w\\s]*\\)", with: "", options: .regularExpression) // wip: remove parenthesis
+			annotation.coordinate = CLLocationCoordinate2D(latitude: monument.latitude, longitude: monument.longitude)
 			view.addAnnotation(annotation)
 			
 			// Generate polyline
 			let request = MKDirections.Request()
 			request.source = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: coords?.latitude ?? 0, longitude: coords?.longitude ?? 0), addressDictionary: nil))
-			request.destination = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: monument!.latitude, longitude: monument!.longitude), addressDictionary: nil))
+			request.destination = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: monument.latitude, longitude: monument.longitude), addressDictionary: nil))
 			request.requestsAlternateRoutes = true
 			request.transportType = .walking
 

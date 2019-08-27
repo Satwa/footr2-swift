@@ -12,12 +12,10 @@ struct SummaryView: View {
 	@EnvironmentObject var locationManager: LocationManager
 	@State var selectedTags: [Tag]
 	@Binding var expectedTime: Double
-
-	@State var showAnyMonument: Bool = false
 	
     var body: some View {
         VStack{
-			MapSummaryComponent(coords: locationManager.lastKnownLocation?.coordinate, timeRadius: $expectedTime, monuments: locationManager.monumentsManager.monuments, tags: $selectedTags)
+			MapSummaryComponent(coords: locationManager.lastKnownLocation?.coordinate, timeRadius: $expectedTime, monuments: locationManager.monumentsManager.monuments, tags: $selectedTags, walk: locationManager.historyManager.currentWalk)
 				.cornerRadius(10)
 				.shadow(radius: 12)
 				.padding(.top, 100)
@@ -25,21 +23,14 @@ struct SummaryView: View {
 				.frame(minHeight: 0, maxHeight: .infinity)
 			
 
-			List(locationManager.monumentsManager.monuments.filter({ $0.announced ?? false })){ monument in
-				Text(monument.name)
-					.foregroundColor((monument.ignored ?? false) ? .gray : .black)
-					.onTapGesture {
-						self.locationManager.monumentsManager.selectedMonument = self.locationManager.monumentsManager.monuments.first{ $0.name == monument.name }
-						self.showAnyMonument = true
-					}
+			List{
+				ForEach(locationManager.historyManager.currentWalk.monuments){ monument in
+					MonumentRowComponent(monument: .constant(monument))
+				}
 			}
 			.cornerRadius(10)
 			.shadow(radius: 12)
-			.sheet(isPresented: $showAnyMonument){
-				MonumentDetailsView(monument: self.$locationManager.monumentsManager.selectedMonument).environmentObject(self.locationManager)
-			}
 		}
-		.navigationViewStyle(StackNavigationViewStyle())
 		.navigationBarHidden(true)
 		.padding()
 		.padding(.bottom, 25)

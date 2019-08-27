@@ -19,6 +19,7 @@ import CoreLocation
 class HistoryManager: NSObject, ObservableObject {
 	internal let objectWillChange = ObservableObjectPublisher()
 	@Published var history: WalksHistory = WalksHistory(walks: [])
+	@Published var currentWalk: Walk = Walk(latitude: 0, longitude: 0, monuments: [], positions: [])
 	
 	var lastStartedWalkInMemory: Double = 0
 	
@@ -48,6 +49,7 @@ class HistoryManager: NSObject, ObservableObject {
 				}
 				
 				history.walks[walk_index].monuments[monument_index] = monument
+				currentWalk.monuments[monument_index] = monument
 			} else {
 				// Monument need to monument
 				guard let walk_index = history.walks.firstIndex(where: { $0.startedAt == self.lastStartedWalkInMemory }) else {
@@ -56,6 +58,7 @@ class HistoryManager: NSObject, ObservableObject {
 				}
 				
 				history.walks[walk_index].monuments.append(monument)
+				currentWalk.monuments.append(monument)
 			}
 			
 			save()
@@ -73,6 +76,8 @@ class HistoryManager: NSObject, ObservableObject {
 			
 			history.walks[walk_index].stopped = true
 			history.walks[walk_index].stoppedAt = Date.timeIntervalSinceReferenceDate
+			currentWalk.stopped = true
+			currentWalk.stoppedAt = history.walks[walk_index].stoppedAt
 			
 			save()
 		}else{
@@ -83,6 +88,7 @@ class HistoryManager: NSObject, ObservableObject {
 	func addWalk(latitude: Double, longitude: Double){ // TODO: When adding walk, schedule notification back to home
 		self.lastStartedWalkInMemory = Date.timeIntervalSinceReferenceDate
 		history.walks.append(Walk(startedAt: self.lastStartedWalkInMemory, latitude: latitude, longitude: longitude, monuments: [], positions: [Coordinate(latitude: latitude, longitude: longitude)]))
+		currentWalk = history.walks.last!
 		
 		save()
 	}
@@ -109,6 +115,7 @@ class HistoryManager: NSObject, ObservableObject {
 			}
 			
 			history.walks[walk_index].positions.append(Coordinate(latitude: location.latitude, longitude: location.longitude))
+			currentWalk.positions.append(Coordinate(latitude: location.latitude, longitude: location.longitude))
 			
 			save()
 		}else{
