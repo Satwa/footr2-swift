@@ -10,6 +10,8 @@ import Foundation
 //import Combine
 import SwiftUI
 import UserNotifications
+import CoreLocation
+import MapKit
 
 let notificationCenter = UNUserNotificationCenter.current()
 
@@ -38,7 +40,14 @@ class NotificationsManager: ObservableObject{
 				  hiddenPreviewsBodyPlaceholder: "",
 				  options: .customDismissAction)
 			
-			notificationCenter.setNotificationCategories([placeNearbyCategory]) // later: summaryCategory?
+			let summaryCategory =
+				UNNotificationCategory(identifier: "SUMMARY_CAT",
+				actions: [],
+				intentIdentifiers: [],
+				hiddenPreviewsBodyPlaceholder: "",
+				options: .customDismissAction)
+			
+			notificationCenter.setNotificationCategories([placeNearbyCategory, summaryCategory]) // later: summaryCategory?
 		}
 		
         func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {

@@ -49,6 +49,7 @@ class Monument: Codable, Identifiable {
 	var ignored: Bool? = false
 	var announced: Bool? = false
 	var followed: Bool? = true
+	var visited: Bool? = false
 }
 
 struct CachedMonuments: Codable { // Cache file conforms to this in theory

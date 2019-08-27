@@ -121,4 +121,9 @@ class MonumentsManager: NSObject, ObservableObject {
 	func getMonument(name: String) -> Monument? {
 		return self.monuments.first{ $0.name == name }
 	}
+	
+	func markAsVisited(idx: Int){
+		self.monuments[idx].visited = true
+		self.objectWillChange.send() //while this is still buggy
+	}
 }

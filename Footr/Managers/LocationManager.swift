@@ -123,6 +123,11 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 				if locations.last!.distance(from: monumentLocation) <= monumentsNear && includes.count > 0 {
 					notificationsManager.scheduleNotification(monument: monument)
 					self.monumentsManager.markAsAnnounced(idx: i)
+					
+					if locations.last!.distance(from: monumentLocation) <= 80 && !(monument.visited ?? false) {
+						self.monumentsManager.markAsVisited(idx: i)
+						self.historyManager.manipulateMonument(monument: monument)
+					}
 				}
 			}
 			
